@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
+AUTH_USER_MODEL = 'user_profile.ProfileUser'
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,6 +30,10 @@ SECRET_KEY = '+jbuc&+oo-*g!x)03o+&v*70*=$e7)20m83n)y)3(!4mg(tfze'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# custom user model definition:
+
+
 
 
 # Application definition
@@ -85,6 +93,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
