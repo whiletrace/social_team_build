@@ -18,9 +18,7 @@ from django.urls import path, include
 
 from user_profile import views
 
-# Todo: URL
-#  make main URL and namespacing
-#  should be Profile pg
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user_profile/',

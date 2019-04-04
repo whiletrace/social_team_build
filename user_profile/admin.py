@@ -5,11 +5,6 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import ProfileUser, UserProfile
 
 
-
-
-
-
-
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
 class UserProfileInline(admin.StackedInline):
@@ -19,10 +14,9 @@ class UserProfileInline(admin.StackedInline):
 
 
 class UserAdmin(BaseUserAdmin):
-   inlines = [UserProfileInline]
+    inlines = [UserProfileInline]
 
-
-
+    ordering = ['email']
 
 # Register your models here.
 admin.site.register(ProfileUser, UserAdmin)

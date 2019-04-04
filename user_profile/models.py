@@ -1,8 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
-from django.utils import timezone
 # Create your models here.
 # Todo:create_model
 #   fields:
@@ -15,15 +13,41 @@ from django.utils import timezone
 #   bio
 
 
+class ProfileUserManager(BaseUserManager):
+
+    def create_user(self, email, first_name, last_name, password=None):
+
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.ProfileUser(
+            email=self.normalize_email(email),
+            )
+        user.first_name = first_name
+        user.last_name = last_name
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, first_name, last_name, username, password):
+
+        user = self.ProfileUser(
+            email=self.normalize_email(email),)
+        user.first_name = first_name
+        user.last_name = last_name
+
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
 
 # ! Instead of referring to User directly,
 # you should reference the user model
 # using django.contrib.auth.get_user_model().
-
-
 class ProfileUser(AbstractUser):
     """ Custom User model sets email as Unique_Identifier"""
 
+    username = models.CharField(blank=True, max_length=25, null=True)
     email = models.EmailField(
 
         verbose_name='email address',
@@ -31,8 +55,22 @@ class ProfileUser(AbstractUser):
         unique=True
         )
 
-    REQUIRED_FIELDS = ('first_name', 'last_name')
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=150)
+
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
     USERNAME_FIELD = 'email'
+
+    object = ProfileUserManager
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
 
 class UserProfile(models.Model):
@@ -44,7 +82,6 @@ class UserProfile(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
         )
-
 
     date_of_birth = models.DateField()
     bio = models.TextField()
