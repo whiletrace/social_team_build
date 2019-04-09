@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-
 AUTH_USER_MODEL = 'user_profile.ProfileUser'
 
 
@@ -32,8 +31,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # custom user model definition:
-
-
 
 
 # Application definition
@@ -97,19 +94,42 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+
+        'OPTIONS': {
+            'max_similarity': 1
+            }
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
+
+        'OPTIONS': {
+            'min_length': 14
+            }
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME':
+            'python_proj7.custom_validators.SpecialCharacterValidator'
+    },
+     {
+        'NAME':
+            'python_proj7.custom_validators.UpperLowerCaseValidator'
+    },
+    {
+        'NAME':
+            'python_proj7.custom_validators.ContainsNumberValidator'
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

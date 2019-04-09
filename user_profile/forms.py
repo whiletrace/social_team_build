@@ -5,34 +5,59 @@ from . import models
 
 _ = gettext.gettext
 
-#custom validator for the password
+
+# utility function for field clean and validation
+# used in validations of email and password
+# because the comparison operations are identical
+def validate_equal(arg1, arg2):
+    if arg1 != arg2:
+        raise forms.ValidationError('{} and {} needs to match'
+                                    .format(arg1, arg2))
 
 
-class Registration(forms.ModelForm):
-    email = forms.EmailField(label='Enter your email', max_length=100)
-    email_validation = forms.CharField(max_length=100)
+class UserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(label='password',
+                                widget=forms.PasswordInput)
+    password2 = forms.CharField(label='verify password',
+                                widget=forms.PasswordInput)
+
+    email1 = forms.CharField(label='email',
+                             widget=forms.EmailInput)
+    email2 = forms.CharField(label='verify email',
+                             widget=forms.EmailInput)
+
+    def clean_password2(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data('password1')
+        password2 = cleaned_data('password2')
+        validate_equal(password1, password2)
+        return password2
+
+    def clean_email2(self):
+        cleaned_data = super().clean()
+        email1 = cleaned_data('email1')
+        email2 = cleaned_data('email2')
+        validate_equal(email1, email2)
+        return email2
+
+    # a cleaning method for making sure the fields
+    # match there verification partners etc
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
     class Meta:
-        model = models.UserProfile
-
-        fields = [
-            'first_name',
-            'last_name',
+        model = models.ProfileUser
+        fields = (
             'email',
-            'DOB',
-            'avatar',
-            'password'
-            ]
+            'first_name',
+            'last_name',)
 
-# a cleaning method for making sure the fields match
-# match there verification partners etc
-    def pattern_clean(self, match1, match2):
-        cleaned_data = super().clean()
-        match1 = cleaned_data.get('{}'.format(match1))
-        match2 = cleaned_data.get('{}'.format(match2))
-        if match1 != match2:
-            raise forms.ValidationError(_('{}'.format(match1) + 'needs to match'
-                                          + '{}'.format(match2)))
+
 # Todo: create forms
 #   registration form:
 #       fields:
@@ -61,4 +86,5 @@ class Registration(forms.ModelForm):
 #   Todo: Login_Form:
 #       email
 #       password
+
 

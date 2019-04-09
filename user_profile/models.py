@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.conf import settings
 # Create your models here.
 # Todo:create_model
@@ -20,23 +20,25 @@ class ProfileUserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
 
-        user = self.ProfileUser(
+        user = self.model(
             email=self.normalize_email(email),
+            first_name = first_name,
+            last_name = last_name,
             )
-        user.first_name = first_name
-        user.last_name = last_name
+
+
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, username, password):
+    def create_superuser(self, email, first_name, last_name, password):
 
-        user = self.ProfileUser(
-            email=self.normalize_email(email),)
-        user.first_name = first_name
-        user.last_name = last_name
+        user = self.model(
+            email=self.normalize_email(email),
+            first_name = first_name,
+            last_name = last_name,
+            )
 
-        user.is_admin = True
         user.save(using=self._db)
         return user
 
@@ -44,10 +46,10 @@ class ProfileUserManager(BaseUserManager):
 # ! Instead of referring to User directly,
 # you should reference the user model
 # using django.contrib.auth.get_user_model().
-class ProfileUser(AbstractUser):
+class ProfileUser( AbstractBaseUser,):
     """ Custom User model sets email as Unique_Identifier"""
 
-    username = models.CharField(blank=True, max_length=25, null=True)
+    username = None
     email = models.EmailField(
 
         verbose_name='email address',
@@ -61,16 +63,20 @@ class ProfileUser(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
     USERNAME_FIELD = 'email'
 
-    object = ProfileUserManager
+    objects = ProfileUserManager()
 
     def has_perm(self, perm, obj=None):
         return True
 
     def has_module_perms(self, app_label):
         return True
+
+    @property
+    def is_staff(self):
+        return self.is_admin
 
 
 class UserProfile(models.Model):
