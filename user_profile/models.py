@@ -26,19 +26,19 @@ class ProfileUserManager(BaseUserManager):
             last_name = last_name,
             )
 
-
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, first_name, last_name, password):
 
-        user = self.model(
-            email=self.normalize_email(email),
-            first_name = first_name,
-            last_name = last_name,
+        user = self.create_user(
+            email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
             )
-
+        user.is_admin = True
         user.save(using=self._db)
         return user
 
@@ -46,10 +46,9 @@ class ProfileUserManager(BaseUserManager):
 # ! Instead of referring to User directly,
 # you should reference the user model
 # using django.contrib.auth.get_user_model().
-class ProfileUser( AbstractBaseUser,):
+class ProfileUser(AbstractBaseUser):
     """ Custom User model sets email as Unique_Identifier"""
 
-    username = None
     email = models.EmailField(
 
         verbose_name='email address',
@@ -63,8 +62,8 @@ class ProfileUser( AbstractBaseUser,):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = ['first_name', 'last_name']
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = ProfileUserManager()
 

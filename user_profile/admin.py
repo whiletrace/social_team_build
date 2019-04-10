@@ -18,20 +18,29 @@ class UserAdmin(BaseUserAdmin):
 
     add_form = forms.UserCreationForm
 
-    list_display = ('email', 'first_name', 'last_name', 'is_admin', 'is_active')
-    list_filter = ('is_active', 'is_admin',)
+    list_display = ('email', 'first_name', 'last_name', 'is_admin')
+    list_filter = ('is_admin',)
 
     fieldsets = (
         (None, {
             'fields': ('email', 'password')
             }),
         ('profile info', {'fields': ('first_name,', 'last_name')}),
-        ('permissions', {'fields':('is_active', 'is_admin', 'is_superuser')})
+        ('permissions', {'fields': ('is_active', 'is_admin', 'is_superuser')})
     )
     inlines = [UserProfileInline]
 
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('first_name', 'last_name', 'email1', 'email2', 'password1',
+                       'password2')}
+        ),
+        ('permissions', {'fields': ('is_active', 'is_admin')}),
+    )
+
     search_fields = ('email',)
-    ordering = ['email']
+    ordering = ('email',)
     filter_horizontal = ()
 
 
