@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib import admin
 from . import forms
 from django.contrib.auth.models import Group
@@ -18,7 +17,9 @@ class UserAdmin(BaseUserAdmin):
 
     add_form = forms.UserCreationForm
 
-    list_display = ('email', 'first_name', 'last_name', 'is_admin')
+    list_display = ('email', 'first_name', 'last_name', 'date_of_birth',
+                    'is_admin')
+
     list_filter = ('is_admin',)
 
     fieldsets = (
@@ -26,19 +27,17 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password')
             }),
         ('profile info', {'fields': ('first_name,', 'last_name')}),
-        ('permissions', {'fields': ('is_active', 'is_admin', 'is_superuser')})
-    )
+        ('permissions', {'fields': ('is_active', 'is_admin')})
+        )
     inlines = [UserProfileInline]
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('first_name', 'last_name', 'email1', 'email2', 'password1',
-                       'password2')}
-        ),
+            'fields': ('first_name', 'last_name', 'date_of_birth', 'email1',
+                       'email2', 'password1', 'password2')}),
         ('permissions', {'fields': ('is_active', 'is_admin')}),
     )
-
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
@@ -47,6 +46,4 @@ class UserAdmin(BaseUserAdmin):
 # Register your models here.
 admin.site.register(ProfileUser, UserAdmin)
 admin.site.unregister(Group)
-
-
 

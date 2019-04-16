@@ -15,7 +15,7 @@ from django.conf import settings
 
 class ProfileUserManager(BaseUserManager):
 
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, email, first_name, last_name, date_of_birth, password=None):
 
         if not email:
             raise ValueError('Users must have an email address')
@@ -24,19 +24,22 @@ class ProfileUserManager(BaseUserManager):
             email=self.normalize_email(email),
             first_name = first_name,
             last_name = last_name,
+            date_of_birth = date_of_birth
             )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password):
+    def create_superuser(self, email, first_name, last_name, date_of_birth,
+                         password):
 
         user = self.create_user(
             email,
             password=password,
             first_name=first_name,
             last_name=last_name,
+            date_of_birth=date_of_birth
             )
         user.is_admin = True
         user.save(using=self._db)
@@ -58,12 +61,13 @@ class ProfileUser(AbstractBaseUser):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=150)
+    date_of_birth = models.DateField()
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'date_of_birth']
 
     objects = ProfileUserManager()
 
@@ -88,6 +92,5 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE
         )
 
-    date_of_birth = models.DateField()
     bio = models.TextField()
     avatar = models.ImageField(blank=True)

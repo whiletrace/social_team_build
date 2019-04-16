@@ -23,6 +23,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user_profile/',
          include('user_profile.urls', namespace='user_profile')),
-    path('', views.profile_detail, name='profile_detail')
-
     ]

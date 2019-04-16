@@ -1,10 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import get_user_model
 from django.forms import modelformset_factory
 from datetime import datetime
 import gettext
 from . import models
-
+user = get_user_model()
 _ = gettext.gettext
 
 
@@ -58,25 +59,6 @@ class UserCreationForm(forms.ModelForm):
         validate_equal(email1, email2)
         return email2
 
-    def save(self, commit=True):
-        """Save the provided password in hashed format"""
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
-
-    class Meta:
-        model = models.ProfileUser
-        fields = (
-            'email',
-            'first_name',
-            'last_name',)
-
-
-class UserProfileForm(forms.ModelForm):
-    """ model form for the user profile"""
-
     def clean_date_of_birth(self):
         cleaned_data = super().clean()
         date_of_birth = cleaned_data('date_of_birth')
@@ -91,6 +73,26 @@ class UserProfileForm(forms.ModelForm):
                     )
         return date_of_birth
 
+    def save(self, commit=True):
+        """Save the provided password in hashed format"""
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+    class Meta:
+        model = models.ProfileUser
+        fields = (
+            'email',
+            'first_name',
+            'last_name',
+            'date_of_birth')
+
+
+class UserProfileForm(forms.ModelForm):
+    """ model form for the user profile"""
+
     def clean_bio(self):
         cleaned_data = super().clean()
         bio = cleaned_data('bio')
@@ -104,7 +106,6 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = models.UserProfile
         fields = [
-            'date_of_birth',
             'bio',
             'avatar'
             ]
@@ -120,9 +121,10 @@ UserProfileInlineFormSet = forms.inlineformset_factory(
     models.ProfileUser,
     models.UserProfile,
     extra=0,
-    fields=('date_of_birth',
+    fields=(
             'bio',
-            'avatar'),
+            'avatar'
+        ),
     formset=UserProfileFormSet,
     min_num=1,
     max_num=1,
@@ -136,8 +138,8 @@ class LoginForm(AuthenticationForm):
                 'You must create a profile to login', code='Not-registered'
                 )
 
-class ChangePasswordForm(PasswordChangeForm):
-    
+# class ChangePasswordForm(PasswordChangeForm):
+
 
 # Todo: create forms
 #   registration form:
