@@ -2,6 +2,7 @@ from django.contrib import admin
 from . import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 from .models import ProfileUser, UserProfile
 
 
@@ -26,7 +27,6 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'fields': ('email', 'password')
             }),
-        ('profile info', {'fields': ('first_name,', 'last_name')}),
         ('permissions', {'fields': ('is_active', 'is_admin')})
         )
     inlines = [UserProfileInline]
@@ -34,7 +34,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('first_name', 'last_name', 'date_of_birth', 'email1',
+            'fields': ('first_name', 'last_name', 'date_of_birth', 'email',
                        'email2', 'password1', 'password2')}),
         ('permissions', {'fields': ('is_active', 'is_admin')}),
     )

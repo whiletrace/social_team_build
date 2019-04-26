@@ -1,16 +1,8 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.conf import settings
+from django.urls import reverse
 # Create your models here.
-# Todo:create_model
-#   fields:
-#   first name
-#   last name
-#   date of birth
-#   email
-#   password
-#   avatar image
-#   bio
 
 
 class ProfileUserManager(BaseUserManager):
@@ -81,6 +73,8 @@ class ProfileUser(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    def get_absolute_url(self):
+        return reverse('user_profile:user_detail')
 
 class UserProfile(models.Model):
     """

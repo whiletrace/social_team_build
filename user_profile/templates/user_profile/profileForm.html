@@ -1,0 +1,11 @@
+{% extends 'user_profile/layout.html' %}
+{% block content %}
+<form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+    {% if form.errors %}
+    {{ form.errors }}
+    {% endif %}
+ <input type="submit" class="button" value="Save">
+</form>
+{% endblock %}
