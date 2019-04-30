@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
-from .models import ProfileUser, UserProfile
 from . import forms
 from django.forms import ValidationError
 
@@ -19,29 +18,38 @@ User = get_user_model()
 def user_create(request):
 
     form = forms.UserCreationForm
+    profile_form = forms.UserProfileForm
 
-    if request.method == 'Post':
+    if request.method == 'POST':
+
         form = forms.UserCreationForm(request.POST)
-        #profile_form = forms.UserProfileForm(request.Post)
+        profile_form = forms.UserProfileForm(request.POST, request.FILES)
 
-        if form.is_valid():# and profile_form.is_valid():
-
+        if form.is_valid() and profile_form.is_valid():
             form.save()
             email = form.cleaned_data.get('email')
-            raw_password =form.cleaned_data.get('password1')
+            raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
             login(request, user)
+            user = request.user
+            profile_form.instance.user = user
+            profile_form.save()
+
             messages.add_message(request, messages.SUCCESS,
                                  '{} {} your profile has been created'.format
                                  (form.cleaned_data['first_name'],
                                   form.cleaned_data['last_name'])
                                  )
-
             return HttpResponse("hey great job thanks for the nuggets of data")
         else:
-            messages.add_message(request, level=Exception, message='could not create a user')
+            messages.add_message(request, messages.ERROR,
+                                 message='could not create a user because{}'.
+                                 format(print(form.errors)))
 
-    return render(request, 'user_profile/profileForm.html', {'form': form})
+    return render(request, 'user_profile/profileForm.html',
+                  {'form': form,
+                   'profile_form': profile_form,
+                   'user': request.user})
 
 
 def edit_profile(request):
@@ -49,7 +57,6 @@ def edit_profile(request):
     user = request.user
     form = forms.EditUserForm(instance=user)
     profile_form = forms.UserProfileForm(instance=user)
-    import pdb;pdb.set_trace()
     if request.method == 'POST':
         form = forms.EditUserForm(request.POST, instance=user)
         profile_form = forms.UserProfileForm(
@@ -69,12 +76,9 @@ def edit_profile(request):
                                  )
             return HttpResponseRedirect(User.get_absolute_url())
     return render(request, 'user_profile/profileForm.html',
-                {
-                   'form': form,
+                  {'form': form,
                    'profile_form': profile_form,
-                   'user': user
-                }
-                  )
+                   'user': user})
 
 #using this just as a general pattern not trying to memorize things
 
@@ -86,6 +90,8 @@ class ProfileView(DetailView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
 '''
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -95,23 +101,3 @@ class ProfileView(DetailView):
 
         return context
 '''
-
-
-
-
-
-#Todo profile view:
-#   default view
-#   get user pk
-#   for user data:
-#   make user object available as context
-#   info to be looped through in template
-#   render template using proper url
-
-
-#Todo edit profile view:
-#   get user pk
-#   for user data:
-#   make user object available as context
-#   info to be looped through in template
-#   render template using proper url

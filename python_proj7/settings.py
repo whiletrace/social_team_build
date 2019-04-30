@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user_profile.apps.UserProfileConfig',
-]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,15 +53,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    ]
 
 ROOT_URLCONF = 'python_proj7.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':[os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,10 +68,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+                ],
+            },
         },
-    },
-]
+                ]
 
 WSGI_APPLICATION = 'python_proj7.wsgi.application'
 
@@ -84,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
 
 # Password validation
@@ -95,12 +94,13 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator',
 
         'OPTIONS': {
             'max_similarity': 1
             }
-    },
+        },
     {
         'NAME':
             'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -108,28 +108,28 @@ AUTH_PASSWORD_VALIDATORS = [
         'OPTIONS': {
             'min_length': 14
             }
-    },
+        },
     {
         'NAME':
             'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+        },
     {
         'NAME':
             'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+        },
     {
         'NAME':
             'python_proj7.custom_validators.SpecialCharacterValidator'
-    },
-     {
+        },
+    {
         'NAME':
             'python_proj7.custom_validators.UpperLowerCaseValidator'
-    },
+        },
     {
         'NAME':
             'python_proj7.custom_validators.ContainsNumberValidator'
-    },
-]
+        },
+    ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

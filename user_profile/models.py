@@ -1,22 +1,26 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth import get_user_model
+
 from django.conf import settings
 from django.urls import reverse
+
+
 # Create your models here.
 
 
 class ProfileUserManager(BaseUserManager):
 
-    def create_user(self, email, first_name, last_name, date_of_birth, password=None):
-
+    def create_user(self, email, first_name, last_name, date_of_birth,
+                    password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
-            first_name = first_name,
-            last_name = last_name,
-            date_of_birth = date_of_birth
+            first_name=first_name,
+            last_name=last_name,
+            date_of_birth=date_of_birth
             )
 
         user.set_password(password)
@@ -25,7 +29,6 @@ class ProfileUserManager(BaseUserManager):
 
     def create_superuser(self, email, first_name, last_name, date_of_birth,
                          password):
-
         user = self.create_user(
             email,
             password=password,
@@ -76,6 +79,7 @@ class ProfileUser(AbstractBaseUser):
     def get_absolute_url(self):
         return reverse('user_profile:user_detail')
 
+
 class UserProfile(models.Model):
     """
     UserProfile model holds user data not used in User Auth
@@ -88,3 +92,15 @@ class UserProfile(models.Model):
 
     bio = models.TextField()
     avatar = models.ImageField(blank=True)
+
+
+"""
+@receiver(post_save, sender=ProfileUser)
+def signal(sender, instance, created, **kwargs):
+    import pdb; pdb.set_trace()
+    if created:
+        UserProfile.objects.create(user=instance)
+    else:
+        instance.userprofile.save()
+
+"""

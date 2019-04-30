@@ -108,6 +108,7 @@ class UserChangeForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     """ model form for the user profile"""
 
+
     def clean_bio(self):
         cleaned_data = super().clean()
         bio = self.cleaned_data.get('bio')
@@ -116,7 +117,6 @@ class UserProfileForm(forms.ModelForm):
                                         'least 10 char long',
                                         code='bio_not_min_length')
         return bio
-
 
     class Meta:
         model = models.UserProfile
