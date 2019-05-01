@@ -91,7 +91,7 @@ class UserProfile(models.Model):
         )
 
     bio = models.TextField()
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(blank=True, upload_to='user_profile')
 
 
 """

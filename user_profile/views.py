@@ -84,10 +84,10 @@ def edit_profile(request):
 
 
 class ProfileView(DetailView):
+
     model = User
 
     queryset = User.objects.all()
-
     def get_object(self, queryset=None):
         return self.request.user
 
