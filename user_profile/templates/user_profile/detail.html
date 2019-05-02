@@ -1,8 +1,6 @@
 {% extends 'user_profile/layout.html' %}
 {% block content %}
-<div class="grid-25">
-        nav here maybe?
-    </div>
+
     <div class="grid-75">
         <h1>Welcome! {{object.first_name }} {{ object.last_name }}</h1>
        <p>
@@ -23,5 +21,6 @@
         <p>
             bio: {{ object.userprofile.bio }}
         </p>
+    <button onclick="window.location.href = '{% url 'user_profile:edit_profile' %}';">edit profile</button>
     </div>
 {% endblock %}

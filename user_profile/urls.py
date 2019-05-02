@@ -1,9 +1,8 @@
-from django.urls import path, include
+from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from .views import ProfileView
-
-
+from django.http import request
 
 app_name = 'user_profile'
 
@@ -21,15 +20,12 @@ urlpatterns = [
          auth_views.LoginView.as_view(template_name='user_profile/login.html',
                                       redirect_field_name='goto'),
          name='login'),
-
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(
+        template_name='user_profile/logout.html'), name='logout'),
 
     path('change-password/',
-         auth_views.PasswordChangeView.as_view(
-             template_name='user_profile/passwordChange.html'
-             )
+         auth_views.PasswordChangeView.as_view
+         (template_name='user_profile/passwordChange.html'),
+         name='change_password'
          ),
-]
-
-
-
+    ]

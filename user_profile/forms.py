@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password,\
+    password_validators_help_texts
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from datetime import datetime
 import gettext
@@ -34,12 +36,13 @@ class UserCreationForm(forms.ModelForm):
     and a user is created
     """
     password1 = forms.CharField(label='password',
-                                widget=forms.PasswordInput)
+                                widget=forms.PasswordInput,
+                                help_text=password_validators_help_texts())
     password2 = forms.CharField(label='verify password',
                                 widget=forms.PasswordInput)
 
     email = forms.CharField(label='email',
-                             widget=forms.EmailInput)
+                            widget=forms.EmailInput)
     email2 = forms.CharField(label='verify email',
                              widget=forms.EmailInput)
 
@@ -47,6 +50,7 @@ class UserCreationForm(forms.ModelForm):
         """method verifies password1 and password2 fields match """
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
+        validate_password(password1, user=user)
         validate_equal(password1, password2)
         return password2
 
@@ -108,9 +112,7 @@ class UserChangeForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     """ model form for the user profile"""
 
-
     def clean_bio(self):
-        cleaned_data = super().clean()
         bio = self.cleaned_data.get('bio')
         if len(bio) < 10:
             raise forms.ValidationError('bio needs to be at '
@@ -149,18 +151,3 @@ class LoginForm(AuthenticationForm):
                 )
 
 # class ChangePasswordForm(PasswordChangeForm):
-
-
-
-
-#   Todo: change of password form:
-#           password: passwords must match
-#               minimum password length of 14 characters.
-#               must use of both uppercase and lowercase letters
-#               must include one or more numerical digits
-#               must include one or more of special characters, such as @, #, $
-#               cannot contain the user name or parts of the user’s full name,
-#               such as their first name
-
-#
-

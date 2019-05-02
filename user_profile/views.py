@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
 from . import forms
@@ -52,6 +54,7 @@ def user_create(request):
                    'user': request.user})
 
 
+@login_required
 def edit_profile(request):
 
     user = request.user
@@ -76,18 +79,18 @@ def edit_profile(request):
                                  )
             return HttpResponseRedirect(User.get_absolute_url())
     return render(request, 'user_profile/profileForm.html',
-                  {'form': form,
-                   'profile_form': profile_form,
-                   'user': user})
+              {'form': form,
+               'profile_form': profile_form,
+               'user': user})
 
 #using this just as a general pattern not trying to memorize things
 
 
-class ProfileView(DetailView):
+class ProfileView(LoginRequiredMixin, DetailView):
 
     model = User
-
     queryset = User.objects.all()
+
     def get_object(self, queryset=None):
         return self.request.user
 

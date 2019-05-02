@@ -9,4 +9,7 @@
     {% endif %}
  <input type="submit" class="button" value="Save">
 </form>
+    {% if user.is_authenticated %}
+        <button onclick="window.location.href = '{% url 'user_profile:change_password' %}';">change password</button>
+    {% endif %}
 {% endblock %}

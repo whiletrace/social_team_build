@@ -13,8 +13,8 @@ class SpecialCharacterValidator:
                 )
 
     def get_help_text(self):
-        return _('Password needs to contain at'
-                 'least one special character such as _@#$&)(')
+        return _("Password needs to contain at"
+                 "least one special character such as _@#$&")
 
 
 class UpperLowerCaseValidator:
@@ -28,7 +28,7 @@ class UpperLowerCaseValidator:
                 )
 
     def get_help_text(self):
-        return _('Password needs at least one upper and one lower case letter')
+        return _("Password needs at least one upper and one lower case letter")
 
 
 class ContainsNumberValidator:
@@ -41,4 +41,4 @@ class ContainsNumberValidator:
                 )
 
     def get_help_text(self):
-        return _('password needs to contain at least one number')
+        return _("password needs to contain at least one number")
