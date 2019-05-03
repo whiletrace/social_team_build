@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
 from . import forms
+from . import models
 from django.forms import ValidationError
 
 # since using custom auth and user model
@@ -59,17 +60,19 @@ def edit_profile(request):
 
     user = request.user
     form = forms.EditUserForm(instance=user)
-    profile_form = forms.UserProfileForm(instance=user)
+    profile_form = forms.UserProfileForm(instance=user.userprofile)
+
     if request.method == 'POST':
         form = forms.EditUserForm(request.POST, instance=user)
         profile_form = forms.UserProfileForm(
+            request.FILES,
             request.POST,
-            instance=user
+            instance=user.userprofile
             )
 
         if form.is_valid() and profile_form.is_valid():
             form.save()
-            profile_form.user = user
+            profile_form.instance.user = user
             profile_form.save()
 
             messages.add_message(request, messages.SUCCESS,
@@ -77,7 +80,7 @@ def edit_profile(request):
                                  (form.cleaned_data['first_name'],
                                   form.cleaned_data['last_name'])
                                  )
-            return HttpResponseRedirect(User.get_absolute_url())
+            return HttpResponseRedirect(User().get_absolute_url())
     return render(request, 'user_profile/profileForm.html',
               {'form': form,
                'profile_form': profile_form,

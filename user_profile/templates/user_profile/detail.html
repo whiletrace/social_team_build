@@ -3,9 +3,11 @@
 
     <div class="grid-75">
         <h1>Welcome! {{object.first_name }} {{ object.last_name }}</h1>
+        {% if object.userprofile.avatar %}
        <p>
            <img src="{{ object.userprofile.avatar.url }}" alt="an image of a man standing and smiling holding cup" >
        </p>
+        {% endif %}
         <p>
             first name: {{ object.first_name }}
         </p>
