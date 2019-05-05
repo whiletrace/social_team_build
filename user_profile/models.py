@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth import get_user_model
-
+from django.db.models.signals import post_save
 from django.conf import settings
 from django.urls import reverse
 
@@ -94,13 +94,4 @@ class UserProfile(models.Model):
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
 
-"""
-@receiver(post_save, sender=ProfileUser)
-def signal(sender, instance, created, **kwargs):
-    import pdb; pdb.set_trace()
-    if created:
-        UserProfile.objects.create(user=instance)
-    else:
-        instance.userprofile.save()
 
-"""

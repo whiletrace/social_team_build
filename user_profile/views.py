@@ -57,7 +57,6 @@ def user_create(request):
 
 @login_required
 def edit_profile(request):
-
     user = request.user
     form = forms.EditUserForm(instance=user)
     profile_form = forms.UserProfileForm(instance=user.userprofile)
@@ -65,15 +64,15 @@ def edit_profile(request):
     if request.method == 'POST':
         form = forms.EditUserForm(request.POST, instance=user)
         profile_form = forms.UserProfileForm(
-            request.FILES,
             request.POST,
+            request.FILES,
             instance=user.userprofile
             )
-
+        import pdb; pdb.set_trace()
         if form.is_valid() and profile_form.is_valid():
             form.save()
-            profile_form.instance.user = user
             profile_form.save()
+
 
             messages.add_message(request, messages.SUCCESS,
                                  'updated {} {}'.format
@@ -81,10 +80,12 @@ def edit_profile(request):
                                   form.cleaned_data['last_name'])
                                  )
             return HttpResponseRedirect(User().get_absolute_url())
+        else:
+            messages.add_message(request, messages.ERROR, profile_form.errors)
     return render(request, 'user_profile/profileForm.html',
               {'form': form,
                'profile_form': profile_form,
-               'user': user})
+               'user': request.user})
 
 #using this just as a general pattern not trying to memorize things
 
