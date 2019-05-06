@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseForbidden
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
 from . import forms
 from . import models
 from django.forms import ValidationError
@@ -62,7 +62,7 @@ def edit_profile(request):
     profile_form = forms.UserProfileForm(instance=user.userprofile)
 
     if request.method == 'POST':
-        form = forms.EditUserForm(request.POST, instance=user)
+        form = forms.EditUserForm(data=request.POST, instance=user)
         profile_form = forms.UserProfileForm(
             request.POST,
             request.FILES,
@@ -72,7 +72,6 @@ def edit_profile(request):
         if form.is_valid() and profile_form.is_valid():
             form.save()
             profile_form.save()
-
 
             messages.add_message(request, messages.SUCCESS,
                                  'updated {} {}'.format

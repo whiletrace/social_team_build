@@ -1,10 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password,\
     password_validators_help_texts
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from datetime import datetime
 import gettext
 from . import models
 user = get_user_model()
@@ -35,16 +34,23 @@ class UserCreationForm(forms.ModelForm):
     if form validates data is saved to models.ProfileUser
     and a user is created
     """
+    email = forms.CharField(label='email',
+                            widget=forms.EmailInput)
+    email2 = forms.CharField(label='verify email',
+                             widget=forms.EmailInput)
+
     password1 = forms.CharField(label='password',
                                 widget=forms.PasswordInput,
                                 help_text=password_validators_help_texts())
     password2 = forms.CharField(label='verify password',
                                 widget=forms.PasswordInput)
 
-    email = forms.CharField(label='email',
-                            widget=forms.EmailInput)
-    email2 = forms.CharField(label='verify email',
-                             widget=forms.EmailInput)
+    date_of_birth = forms.DateField(label='birthday',
+                                    input_formats=['%Y-%m-%d',
+                                                   '%m/%d/%Y',
+                                                   '%m/%d/%y'
+                                                   ]
+                                    )
 
     def clean_password2(self):
         """method verifies password1 and password2 fields match """
@@ -60,19 +66,6 @@ class UserCreationForm(forms.ModelForm):
         email2 = self.cleaned_data.get('email2')
         validate_equal(email, email2)
         return email2
-
-    def clean_date_of_birth(self):
-        date_of_birth = self.cleaned_data.get('date_of_birth')
-        date_fmt = ('%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y')
-        for fmt in date_fmt:
-            try:
-                datetime.strftime(date_of_birth, fmt)
-            except ValueError:
-                raise forms.ValidationError(
-                    ' dates must be idn the format YYYY-MM-DD,'
-                    'MM/DD/YYYY, or MM/DD/YY.', code='date_wrong_format'
-                    )
-        return date_of_birth
 
     def save(self, commit=True):
         """Save the provided password in hashed format"""
@@ -129,18 +122,27 @@ class UserProfileForm(forms.ModelForm):
 
 
 class EditUserForm(UserCreationForm):
+
     password1 = None
     password2 = None
 
     email1 = None
     email2 = None
 
-    def save(self, commit=True):
-        """Save the provided password in hashed format"""
-        return user
+    date_of_birth = forms.DateField(label='birthday',
+                                    input_formats=['%Y-%m-%d',
+                                                   '%m/%d/%Y',
+                                                   '%m/%d/%y'
+                                                   ]
+                                    )
+
 
     class Meta(UserCreationForm.Meta):
         exclude = ('password1', 'password2', 'email1')
+
+    def save(self, commit=True):
+        """Save the provided password in hashed format"""
+        pass
 
 
 class LoginForm(AuthenticationForm):
