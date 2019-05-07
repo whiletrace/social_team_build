@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import DetailView
@@ -42,7 +41,7 @@ def user_create(request):
                                  (form.cleaned_data['first_name'],
                                   form.cleaned_data['last_name'])
                                  )
-            return HttpResponse("hey great job thanks for the nuggets of data")
+            return HttpResponseRedirect(User().get_absolute_url())
         else:
             messages.add_message(request, messages.ERROR,
                                  message='could not create a user because{}'.
