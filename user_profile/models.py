@@ -1,15 +1,19 @@
-from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
 from django.conf import settings
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.db import models
 from django.urls import reverse
 
 
-# Create your models here.
-
-
 class ProfileUserManager(BaseUserManager):
+    """Custom Profile manager logic used for user and superuser creation
+
+    please see:
+    https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#writing-a
+    -manager-for-a-custom-user-model
+
+    for further documentation
+
+    """
 
     def create_user(self, email, first_name, last_name, date_of_birth,
                     password=None):
@@ -41,12 +45,15 @@ class ProfileUserManager(BaseUserManager):
         return user
 
 
-# ! Instead of referring to User directly,
-# you should reference the user model
-# using django.contrib.auth.get_user_model().
 class ProfileUser(AbstractBaseUser):
-    """ Custom User model sets email as Unique_Identifier"""
+    """ Custom User model sets email as Unique_Identifier
 
+    please see:
+    https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#specifying
+    -a-custom-user-model
+
+
+    """
     email = models.EmailField(
 
         verbose_name='email address',
@@ -62,7 +69,7 @@ class ProfileUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'date_of_birth']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = ProfileUserManager()
 
@@ -72,7 +79,6 @@ class ProfileUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    @property
     def is_staff(self):
         return self.is_admin
 
@@ -92,6 +98,3 @@ class UserProfile(models.Model):
 
     bio = models.TextField()
     avatar = models.ImageField(blank=True, upload_to='user_profile')
-
-
-

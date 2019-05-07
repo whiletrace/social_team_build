@@ -1,11 +1,16 @@
-from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password,\
-    password_validators_help_texts
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 import gettext
+
+from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.password_validation import\
+    (
+    password_validators_help_texts, validate_password
+    )
+
 from . import models
+
 user = get_user_model()
 _ = gettext.gettext
 
@@ -36,7 +41,7 @@ class UserCreationForm(forms.ModelForm):
     """
     email = forms.CharField(label='email',
                             widget=forms.EmailInput)
-    email2 = forms.CharField(label='verify email',
+    email1 = forms.CharField(label='verify email',
                              widget=forms.EmailInput)
 
     password1 = forms.CharField(label='password',
@@ -49,7 +54,9 @@ class UserCreationForm(forms.ModelForm):
                                     input_formats=['%Y-%m-%d',
                                                    '%m/%d/%Y',
                                                    '%m/%d/%y'
-                                                   ]
+                                                   ],
+                                    help_text='has to be in format YYYY-MM-DD, '
+                                              'MM/DD/YYYY, MM/DD/YY'
                                     )
 
     def clean_password2(self):
@@ -60,12 +67,12 @@ class UserCreationForm(forms.ModelForm):
         validate_equal(password1, password2)
         return password2
 
-    def clean_email2(self):
+    def clean_email1(self):
         """method verifies email1 and email2 fields match """
         email = self.cleaned_data.get('email')
-        email2 = self.cleaned_data.get('email2')
-        validate_equal(email, email2)
-        return email2
+        email1 = self.cleaned_data.get('email1')
+        validate_equal(email, email1)
+        return email1
 
     def save(self, commit=True):
         """Save the provided password in hashed format"""
@@ -79,6 +86,7 @@ class UserCreationForm(forms.ModelForm):
         model = models.ProfileUser
         fields = (
             'email',
+            'email1',
             'first_name',
             'last_name',
             'date_of_birth')
@@ -104,6 +112,8 @@ class UserChangeForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     """ model form for the user profile"""
+    bio = forms.CharField(help_text="This needs to be at least 10 char long",
+                          widget=forms.Textarea)
 
     def clean_bio(self):
         bio = self.cleaned_data.get('bio')
@@ -122,6 +132,17 @@ class UserProfileForm(forms.ModelForm):
 
 
 class EditUserForm(UserCreationForm):
+    """This form gathers and validates data used for editing
+
+    form gathers:
+    email
+    first_name
+    last_name
+
+
+    if form validates data is saved to models.ProfileUser
+    and a user is updated subclasses UserCreationForm
+    """
 
     password1 = None
     password2 = None
@@ -133,7 +154,9 @@ class EditUserForm(UserCreationForm):
                                     input_formats=['%Y-%m-%d',
                                                    '%m/%d/%Y',
                                                    '%m/%d/%y'
-                                                   ]
+                                                   ],
+                                    help_text="has to be in format YYYY-MM-DD,"
+                                              " MM/DD/YYY, MM/DD/YY"
                                     )
 
 
@@ -141,8 +164,10 @@ class EditUserForm(UserCreationForm):
         exclude = ('password1', 'password2', 'email1')
 
     def save(self, commit=True):
-        """Save the provided password in hashed format"""
-        pass
+        user = self.instance
+        if commit:
+            user.save()
+        return user
 
 
 class LoginForm(AuthenticationForm):
@@ -151,5 +176,3 @@ class LoginForm(AuthenticationForm):
             raise forms.ValidationError(
                 'You must create a profile to login', code='Not-registered'
                 )
-
-# class ChangePasswordForm(PasswordChangeForm):

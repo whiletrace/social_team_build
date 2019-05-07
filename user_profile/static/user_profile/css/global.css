@@ -62,6 +62,9 @@ h1 {
   margin: 0.67em 0;
 }
 
+.helptext {
+  font-size: small;
+}
 /* line 105, ../sass/circle/core/reset.sass */
 mark {
   background: #ff0;

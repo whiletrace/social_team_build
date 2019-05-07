@@ -1,25 +1,24 @@
-from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView, UpdateView
+from django.shortcuts import render
+from django.views.generic import DetailView
+
 from . import forms
-from . import models
-from django.forms import ValidationError
 
 # since using custom auth and user model
 # set reference to user model at view module scope
 User = get_user_model()
 
+
 # Create your views here.
 
 
 def user_create(request):
-
     form = forms.UserCreationForm
     profile_form = forms.UserProfileForm
 
@@ -52,7 +51,8 @@ def user_create(request):
     return render(request, 'user_profile/profileForm.html',
                   {'form': form,
                    'profile_form': profile_form,
-                   'user': request.user})
+                   'user':request.user
+                   })
 
 
 @login_required
@@ -68,7 +68,7 @@ def edit_profile(request):
             request.FILES,
             instance=user.userprofile
             )
-        import pdb; pdb.set_trace()
+
         if form.is_valid() and profile_form.is_valid():
             form.save()
             profile_form.save()
@@ -82,15 +82,16 @@ def edit_profile(request):
         else:
             messages.add_message(request, messages.ERROR, profile_form.errors)
     return render(request, 'user_profile/profileForm.html',
-              {'form': form,
-               'profile_form': profile_form,
-               'user': request.user})
+                  {'form':form,
+                   'profile_form':profile_form,
+                   'user':request.user
+                   })
+
 
 #using this just as a general pattern not trying to memorize things
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
-
     model = User
     queryset = User.objects.all()
 

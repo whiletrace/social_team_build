@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
+
 #custom validator for the password
 class SpecialCharacterValidator:
 

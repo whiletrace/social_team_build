@@ -1,8 +1,8 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.urls import path
+
 from . import views
 from .views import ProfileView
-from django.http import request
 
 app_name = 'user_profile'
 
