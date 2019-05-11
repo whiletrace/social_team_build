@@ -24,8 +24,15 @@ urlpatterns = [
         template_name='user_profile/logout.html'), name='logout'),
 
     path('change-password/',
-         auth_views.PasswordChangeView.as_view
-         (template_name='user_profile/passwordChange.html'),
+         auth_views.PasswordChangeView.as_view(
+             success_url='password_change_done',
+             template_name='user_profile/passwordChange.html'),
          name='change_password'
          ),
+
+    path('change-password/password_change_done/',
+         auth_views.PasswordChangeDoneView.as_view(
+             template_name='user_profile/passwordChangeSuccess.html'),
+         name='password_change_done'
+         )
     ]

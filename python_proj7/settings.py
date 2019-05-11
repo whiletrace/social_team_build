@@ -98,7 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
             'UserAttributeSimilarityValidator',
 
         'OPTIONS': {
-            'max_similarity': 1
+            'max_similarity':0.5
             }
         },
     {
