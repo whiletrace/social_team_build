@@ -114,7 +114,7 @@ class UserCreationForm(forms.ModelForm):
         # if condition is not met
         else:
             # password is passed to django auth password validators
-            # defined in python_proj7/settings
+            # defined in social_team/settings
             validate_password(password1, user=User)
             # util function see top of module
             validate_equal(password1, password2)

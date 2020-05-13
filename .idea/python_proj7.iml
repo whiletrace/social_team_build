@@ -15,8 +15,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/virtual_env" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (social_team_build)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-2.2.0" level="application" />
   </component>
@@ -27,8 +28,5 @@
         <option value="$MODULE_DIR$/templates" />
       </list>
     </option>
-  </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>
