@@ -103,3 +103,6 @@ virtual_env/
 
 # mypy
 .mypy_cache/
+
+# IDE config files
+.idea
