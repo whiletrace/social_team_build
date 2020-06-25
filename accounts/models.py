@@ -84,7 +84,7 @@ class ProfileUserManager(BaseUserManager):
         return user
 
 
-class ProfileUser(AbstractBaseUser):
+class NewUser(AbstractBaseUser):
     """
     Model class to define user instances
 

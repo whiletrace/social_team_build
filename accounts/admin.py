@@ -1,9 +1,9 @@
 from django.contrib import admin
-from . import forms
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group
 
-from .models import ProfileUser, UserProfile
+from accounts.models import NewUser, UserProfile
+from . import forms
 
 
 # Define an inline admin descriptor for Employee model
@@ -44,6 +44,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 # Register your models here.
-admin.site.register(ProfileUser, UserAdmin)
+admin.site.register(NewUser, UserAdmin)
 admin.site.unregister(Group)
-

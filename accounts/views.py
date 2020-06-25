@@ -7,14 +7,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import DetailView
 
-from . import forms
+from accounts import forms
 
-# since using custom auth and user model
-# set reference to user model at view module scope
 User = get_user_model()
-
-
-# Create your views here.
 
 
 def user_create(request):
@@ -77,7 +72,7 @@ def user_create(request):
             # UserProfileForm data is saved to database
             # UserProfile obj instance instantiated
             profile_form.save()
-
+            context = {}
             # success message displayed to User
             messages.add_message(request, messages.SUCCESS,
                                  '{} {} your profile has been created'.format
@@ -85,11 +80,11 @@ def user_create(request):
                                   form.cleaned_data['last_name'])
                                  )
             # User redirected to Profile
-            return HttpResponseRedirect(User().get_absolute_url())
+        return HttpResponseRedirect(User().get_absolute_url())
 
     return render(request, 'user_profile/profileForm.html',
-                  {'form': form,
-                   'profile_form': profile_form,
+                  {'form':form,
+                   'profile_form':profile_form,
                    'user':request.user
                    })
 
@@ -150,8 +145,6 @@ def edit_profile(request):
                    'user':request.user
                    })
 
-
-#using this just as a general pattern not trying to memorize things
 
 # class based view subclassed from django generic DetailView
 class ProfileView(LoginRequiredMixin, DetailView):

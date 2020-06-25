@@ -1,5 +1,3 @@
-import gettext
-
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -11,20 +9,9 @@ from django.contrib.auth.password_validation import (
 
 from . import models
 
-# since wrote own User model
-# This method will return the currently active user model
-# the custom user model if one is specified, or
-# User otherwise.
 User = get_user_model()
-# for translation of help text
-# based upon users locality
-# sparsely implemented
-_ = gettext.gettext
 
 
-# utility function for field clean and validation
-# used in validations of email and password
-# because the comparison operations are identical
 def validate_equal(arg1, arg2):
     if arg1 != arg2:
         raise forms.ValidationError('passwords needs to match')
@@ -114,7 +101,7 @@ class UserCreationForm(forms.ModelForm):
         # if condition is not met
         else:
             # password is passed to django auth password validators
-            # defined in social_team/settings
+            # defined in social_team_build/settings
             validate_password(password1, user=User)
             # util function see top of module
             validate_equal(password1, password2)
@@ -168,7 +155,7 @@ class UserCreationForm(forms.ModelForm):
     # Meta class Declares fields included in form
     # defines relationship with associated model class
     class Meta:
-        model = models.ProfileUser
+        model = models.NewUser
         fields = (
             'email',
             'email1',
@@ -191,7 +178,7 @@ class UserChangeForm(forms.ModelForm):
     # Meta class Declares fields included in form
     # defines relationship with associated model class
     class Meta:
-        model = models.ProfileUser
+        model = models.NewUser
         fields = (
             'email',
             'password',
@@ -199,6 +186,7 @@ class UserChangeForm(forms.ModelForm):
             'is_active',
             'is_admin'
             )
+
 
     def clean_password(self):
         """
@@ -318,6 +306,7 @@ class EditUserForm(UserCreationForm):
                    'password2',
                    'email1')
 
+
     def save(self, commit=True):
         """
         overrides save method from
@@ -342,6 +331,7 @@ class LoginForm(AuthenticationForm):
     for  User login
 
     """
+
     def confirm_login_allowed(self, user):
         """
         handles verification of user input

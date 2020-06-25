@@ -1,4 +1,4 @@
-{% load static from staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,15 +21,15 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="{% static "user_profile/css/global.css" %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
 
     <!-- JS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script type="text/javascript"
             src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript"
-            src="{% static "user_profile/js/autogrow.js" %}"></script>
-    <script type="text/javascript" src="{% static "user_profile/js/global.js" %}"></script>
+            src="{% static "js/autogrow.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/global.js" %}"></script>
 
 
 </head>
@@ -49,12 +49,12 @@
                 <nav>
                     <ul class="circle--inline">
                         {% if not user.is_authenticated %}
-                            <li><a href="{% url 'user_profile:register_user' %}">Sign Up</a></li>
-                            <li><a href="{% url 'user_profile:login' %}">Sign
+                            <li><a href="{% url 'accounts:register_user' %}">Sign Up</a></li>
+                            <li><a href="{% url 'accounts:login' %}">Sign
                                 In</a></li>
                         {% else %}
                             <!-- view profile link here? -->
-                             <li><a href="{% url 'user_profile:user_detail' %}"> profile</a></li>
+                            <li><a href="{% url 'user_profile:user_detail' %}"> profile</a></li>
                             <!-- edit profile link here? -->
                             <li><a href="{% url 'user_profile:edit_profile' %}"> edit profile</a></li>
                             <li><a href="{% url 'user_profile:logout' %}">sign out</a></li>
@@ -75,7 +75,9 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% block content %}{% endblock %}
+    {% block content %}
+
+    {% endblock %}
 </div>
 </body>
 </html>
