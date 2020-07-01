@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 
-from accounts.models import NewUser, UserProfile
+from accounts.models import NewUser
+from profiles.models import UserProfile
 from . import forms
 
 

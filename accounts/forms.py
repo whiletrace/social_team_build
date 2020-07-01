@@ -7,6 +7,7 @@ from django.contrib.auth.password_validation import (
 
     )
 
+import profiles.models
 from . import models
 
 User = get_user_model()
@@ -250,7 +251,7 @@ class UserProfileForm(forms.ModelForm):
     # Meta class Declares fields included in form
     # defines relationship with associated model clas
     class Meta:
-        model = models.UserProfile
+        model = profiles.models.UserProfile
         fields = [
             'bio',
             'avatar'

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.urls import reverse
@@ -144,23 +143,3 @@ class NewUser(AbstractBaseUser):
     # default url for user objects profiles detail
     def get_absolute_url(self):
         return reverse('user_profile:user_detail')
-
-
-class UserProfile(models.Model):
-    """
-    UserProfile model defines database table
-    that store user data not used in User Auth
-
-    attr:
-    user : modelOneToOneField :type obj
-    bio : model.TextField :type obj
-    avatar : model.ImageField :type obj
-
-    """
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-        )
-
-    bio = models.TextField()
-    avatar = models.ImageField(blank=True, upload_to='user_profile')
