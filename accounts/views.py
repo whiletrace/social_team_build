@@ -50,7 +50,7 @@ def user_create(request):
     if request.method == 'POST':
         # request object with post method passed to forms as param
         form = forms.UserCreationForm(request.POST)
-        # profile form has additional request obj method because uploading file
+        # profiles form has additional request obj method because uploading file
         profile_form = forms.UserProfileForm(request.POST, request.FILES)
 
         #  if forms pass all validations
@@ -75,7 +75,7 @@ def user_create(request):
             context = {}
             # success message displayed to User
             messages.add_message(request, messages.SUCCESS,
-                                 '{} {} your profile has been created'.format
+                                 '{} {} your profiles has been created'.format
                                  (form.cleaned_data['first_name'],
                                   form.cleaned_data['last_name'])
                                  )
@@ -130,13 +130,13 @@ def edit_profile(request):
         if form.is_valid() and profile_form.is_valid():
             form.save()
             profile_form.save()
-            # success message outputted informing of profile update
+            # success message outputted informing of profiles update
             messages.add_message(request, messages.SUCCESS,
                                  'updated {} {}'.format
                                  (form.cleaned_data['first_name'],
                                   form.cleaned_data['last_name'])
                                  )
-            # user redirected to profile
+            # user redirected to profiles
             return HttpResponseRedirect(User().get_absolute_url())
 
     return render(request, 'user_profile/profileForm.html',

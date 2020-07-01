@@ -26,7 +26,8 @@ urlpatterns = [
                   path('accounts/',
                        include('accounts.urls', namespace='accounts')),
                   path('accounts/', include('django.contrib.auth.urls')),
-                  path('profile/',
+                  path('profiles/',
                        include('accounts.urls', namespace='user_profile')),
+                  # Todo: Url to handle profiles requests
                   ] + static(settings.STATIC_URL,
                              document_root=settings.STATIC_ROOT)

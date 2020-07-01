@@ -199,7 +199,7 @@ class UserChangeForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     """
-    model form for the user profile
+    model form for the user profiles
 
     this collects user data not related to auth
     which is bio info which is a textfield
@@ -259,7 +259,7 @@ class UserProfileForm(forms.ModelForm):
 
 class EditUserForm(UserCreationForm):
     """
-    model form to gather data for user edit profile
+    model form to gather data for user edit profiles
 
     If valid Data gathered is cleaned passed to models.ProfileUser
     and a authenticated User object in updated if user data is not valid
@@ -347,5 +347,5 @@ class LoginForm(AuthenticationForm):
         # if credentials match user is authenticated
         if not user.is_active:
             raise forms.ValidationError(
-                'You must create a profile to login', code='Not-registered'
+                'You must create a profiles to login', code='Not-registered'
                 )

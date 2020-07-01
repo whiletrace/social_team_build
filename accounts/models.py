@@ -141,7 +141,7 @@ class NewUser(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
-    # default url for user objects profile detail
+    # default url for user objects profiles detail
     def get_absolute_url(self):
         return reverse('user_profile:user_detail')
 
