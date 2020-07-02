@@ -7,7 +7,6 @@ from django.contrib.auth.password_validation import (
 
     )
 
-import profiles.models
 from . import models
 
 User = get_user_model()
@@ -196,66 +195,6 @@ class UserChangeForm(forms.ModelForm):
         :rtype:
         """
         return self.initial["password"]
-
-
-class UserProfileForm(forms.ModelForm):
-    """
-    model form for the user profiles
-
-    this collects user data not related to auth
-    which is bio info which is a textfield
-    and avatar which is a image field
-    class defines form fields, and
-    methods for form field validation
-
-    :var
-      bio: forms.field :type Obj
-      avatar forms.field :type Obj
-
-    methods:
-    clean_bio
-    """
-
-    # defines form bio form field
-    bio = forms.CharField(help_text="This needs to be at least 10 char long",
-                          widget=forms.Textarea)
-
-    def clean_bio(self):
-        """
-        method gets user inputted data and makes sure 10 char long
-
-        if user input is less than 10 chars long
-        validation error is raised and message
-        conveyed to user
-
-         :var
-         bio: form.field.data
-
-        :return: form.field. data
-        :rtype: obj
-        """
-
-        # user inputted data
-        bio = self.cleaned_data.get('bio')
-        # if bio data length less than 10
-        if len(bio) < 10:
-            # form validation error is raised and message
-            # is conveyed to user
-            raise forms.ValidationError('bio needs to be at '
-                                        'least 10 char long',
-                                        code='bio_not_min_length')
-        # form field data is returned
-        return bio
-
-
-    # Meta class Declares fields included in form
-    # defines relationship with associated model clas
-    class Meta:
-        model = profiles.models.UserProfile
-        fields = [
-            'bio',
-            'avatar'
-            ]
 
 
 class EditUserForm(UserCreationForm):

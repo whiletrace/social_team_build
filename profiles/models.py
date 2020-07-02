@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
+
+from accounts.views import ProfileView
 
 
 # So this is going to be a model for profile
@@ -8,9 +11,7 @@ from django.db import models
 # Todo create model for User profile
 #   fields:
 #       Profile name : Charfield
-#       email: EmailField
-#       bio: TextField
-#       avatar:ImageField?
+#       email: EmailField(value already grabbed by User model)
 #       skills: ManytoMany Field?
 #
 
@@ -32,10 +33,14 @@ class UserProfile(models.Model):
     avatar : model.ImageField :type obj
 
     """
-    user = models.OneToOneField(
+    created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        default="",
         on_delete=models.CASCADE
         )
 
     bio = models.TextField()
     avatar = models.ImageField(blank=True, upload_to='user_profile')
+
+    def get_absolute_url(self):
+        return reverse(ProfileView, kwargs={'pk':self.pk})

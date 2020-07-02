@@ -13,7 +13,9 @@ urlpatterns = [
     path('edit_profile/',
          views.edit_profile, name='edit_profile'),
 
-    path('user_register/', views.user_create, name='register_user'),
+    path('user_register/', views.CreateUser.as_view(
+        template_name='user_profile/registration_form.html'),
+         name='register_user'),
 
     path('login/',
          auth_views.LoginView.as_view(template_name='accounts/login.html',

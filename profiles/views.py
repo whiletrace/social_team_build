@@ -1,5 +1,9 @@
-# views will handle logic for each URL
+from django.views.generic.edit import CreateView
 
+from .models import UserProfile
+
+
+# views will handle logic for each URL
 # Todo: create profile
 #   view function or class?
 #   will take and render a form:
@@ -13,6 +17,17 @@
 #   render template:
 #       form
 #       return userprofile object
+
+
+class CreateProfile(CreateView):
+    model = UserProfile
+
+    fields = ['bio', 'avatar']
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 # Todo: edit profile
 #   view function or class?
