@@ -21,7 +21,7 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static "css/global.css" %}">
 
     <!-- JS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -39,25 +39,27 @@
         <div class="circle--fluid">
             <div class="circle--fluid--cell">
                 <h1 class="hide-text circle--logo"><a class="logo"
-                                                      href="#">Circle</a>
+                                                      href="{% url 'home' %}">Circle</a>
                 </h1>
             </div>
             <div class="circle--fluid--cell circle--fluid--primary">
-
+                <nav>
+                    <ul class="circle--inline">
+                        <li><a href="#">nav</a></li>
+                        <li><a href="#">here?</a></li>
+                    </ul>
+                </nav>
             </div>
             <div class="circle--fluid--cell circle--fluid--secondary">
                 <nav>
                     <ul class="circle--inline">
                         {% if not user.is_authenticated %}
                             <li><a href="{% url 'accounts:register_user' %}">Sign Up</a></li>
-                            <li><a href="{% url 'accounts:login' %}">Sign
-                                In</a></li>
+                            <li><a href="{% url 'accounts:login' %}">Sign In</a></li>
                         {% else %}
                             <!-- view profile link here? -->
-                            <li><a href="{% url 'user_profile:user_detail' %}"> profile</a></li>
                             <!-- edit profile link here? -->
-                            <li><a href="{% url 'user_profile:edit_profile' %}"> edit profile</a></li>
-                            <li><a href="{% url 'user_profile:logout' %}">sign out</a></li>
+                            <li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
                         {% endif %}
                     </ul>
                 </nav>
@@ -75,9 +77,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% block content %}
-
-    {% endblock %}
+    {% block content %}{% endblock %}
 </div>
 </body>
 </html>

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
-from accounts.views import ProfileView
+
 
 
 # So this is going to be a model for profile
@@ -43,4 +43,4 @@ class UserProfile(models.Model):
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
     def get_absolute_url(self):
-        return reverse(ProfileView, kwargs={'pk':self.pk})
+        return reverse('profiles:detail', kwargs={'pk': self.pk})

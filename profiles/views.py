@@ -1,15 +1,13 @@
-from django.views.generic.edit import CreateView
+from django.views.generic import DetailView
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from accounts.views import User
 from .models import UserProfile
 
 
 # views will handle logic for each URL
 # Todo: create profile
-#   view function or class?
-#   will take and render a form:
-#   if form is valid:
-#       request POST
-#       instantiate new model profile object
 #    handle logic for skills:
 #       display default list of skills
 #       user choosing skills
@@ -19,7 +17,7 @@ from .models import UserProfile
 #       return userprofile object
 
 
-class CreateProfile(CreateView):
+class CreateProfile(LoginRequiredMixin, CreateView):
     model = UserProfile
 
     fields = ['bio', 'avatar']
@@ -30,12 +28,6 @@ class CreateProfile(CreateView):
 
 
 # Todo: edit profile
-#   view function or class?
-#   will take and render a form:
-#       same form as create profile
-#   if form is valid:
-#       request PUT
-#       updates appropriate model profile object
 #    handle logic for skills:
 #       display Users chosen/added skills
 #       user deleting skills
@@ -44,6 +36,15 @@ class CreateProfile(CreateView):
 #   render template:
 #       form
 #       return userprofile object
+
+
+class EditProfile(LoginRequiredMixin, UpdateView):
+    model = UserProfile
+
+    fields = ['bio', 'avatar']
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 # Todo: Display Profile
@@ -59,3 +60,23 @@ class CreateProfile(CreateView):
 #   render template:
 #       database query
 #       return query
+
+
+class ProfileView(LoginRequiredMixin, DetailView):
+    model = UserProfile
+
+    def get_object(self, queryset=None):
+        """
+        gets object whose data is to be outputted
+
+        In this case that is request.user, request.user
+        and user and all attr are made available to template
+        through context
+
+        :param queryset:
+        :type queryset: object
+        :return: User
+        :rtype: user object
+        """
+
+        return self.request.user

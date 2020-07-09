@@ -1,4 +1,4 @@
-{% extends 'user_profile/layout.html' %}
+{% extends 'profiles/layout.html' %}
 {% block content %}
 
     <div class="grid-75">
@@ -23,6 +23,6 @@
         <p>
             bio: {{ object.userprofile.bio }}
         </p>
-    <button onclick="window.location.href = '{% url 'user_profile:edit_profile' %}';">edit profile</button>
+    <button onclick="window.location.href = '{% url 'profiles:edit_profile' %}';">edit profile</button>
     </div>
 {% endblock %}

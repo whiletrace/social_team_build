@@ -2,10 +2,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView
 
 from accounts import forms
 from .forms import UserCreationForm
@@ -73,10 +72,10 @@ def edit_profile(request):
     # forms retrieve user data from models
     # fields are populated
     user = request.user
-    form = forms.EditUserForm(instance=user)
+    form = forms.UserCreationForm(instance=user)
 
     if request.method == 'POST':
-        form = forms.EditUserForm(data=request.POST, instance=user)
+        form = forms.UserCreationForm(data=request.POST, instance=user)
         # if form data is validated
         # form data is saved user updated
         if form.is_valid():
@@ -90,29 +89,11 @@ def edit_profile(request):
             # user redirected to profiles
             return HttpResponseRedirect(User().get_absolute_url())
 
-    return render(request, 'user_profile/registration_form.html',
-                  {'form':form,
-                   'user':request.user
+    return render(request,
+                  'accounts/registration_form.html',
+                  {'form': form,
+                   'user': request.user
                    })
 
 
 # class based view subclassed from django generic DetailView
-class ProfileView(LoginRequiredMixin, DetailView):
-    model = User
-    queryset = User.objects.all()
-
-    def get_object(self, queryset=None):
-        """
-        gets object whose data is to be outputted
-
-        In this case that is request.user, request.user
-        and user and all attr are made available to template
-        through context
-
-        :param queryset:
-        :type queryset: object
-        :return: User
-        :rtype: user object
-        """
-
-        return self.request.user

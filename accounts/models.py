@@ -143,4 +143,4 @@ class NewUser(AbstractBaseUser):
     # Todo convert this to a registration success message or page
     # default url for user objects profiles detail
     def get_absolute_url(self):
-        return reverse('user_profile:user_detail')
+        return reverse('profiles:detail')

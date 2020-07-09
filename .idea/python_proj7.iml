@@ -27,8 +27,8 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/accounts/templates" />
-        <option value="$MODULE_DIR$/accounts/templates/accounts" />
-        <option value="$MODULE_DIR$/accounts/templates/user_profile" />
+        <option value="$MODULE_DIR$/templates" />
+        <option value="$MODULE_DIR$/profiles/templates" />
       </list>
     </option>
   </component>
