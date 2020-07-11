@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.views import User
 from .models import UserProfile
+from .forms import ProfileForm
 
 
 # views will handle logic for each URL
@@ -17,14 +18,16 @@ from .models import UserProfile
 #       return userprofile object
 
 
-class CreateProfile(LoginRequiredMixin, CreateView):
+class CreateProfile(CreateView):
     model = UserProfile
+    form_class = ProfileForm
 
-    fields = ['bio', 'avatar']
-
-    def form_valid(self, form):
+'''
+def form_valid(self, form):
         form.instance.created_by = self.request.user
-        return super().form_valid(form)
+        return super().form_valid(form)'
+'''
+
 
 
 # Todo: edit profile

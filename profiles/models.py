@@ -3,8 +3,6 @@ from django.db import models
 from django.urls import reverse
 
 
-
-
 # So this is going to be a model for profile
 # non auth related user information
 
@@ -20,6 +18,10 @@ from django.urls import reverse
 #  if user has skill get skill
 #  if skill DoesNotExist createNewSkill
 #  default list of skills to chose from
+
+
+class Skills(models.Model):
+    skill = models.CharField(blank=True, default='', max_length=25)
 
 
 class UserProfile(models.Model):
@@ -38,9 +40,14 @@ class UserProfile(models.Model):
         default="",
         on_delete=models.CASCADE
         )
-
+    username = models.CharField(blank=True, default='', max_length=50)
     bio = models.TextField()
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
+    skills = models.ManyToManyField('Skills')
+
     def get_absolute_url(self):
         return reverse('profiles:detail', kwargs={'pk': self.pk})
+
+
+
