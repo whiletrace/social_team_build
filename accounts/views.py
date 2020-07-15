@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import request
 from django.shortcuts import render
 from django.views.generic import CreateView
 
@@ -45,6 +45,16 @@ class CreateUser(CreateView):
     """
     model = settings.AUTH_USER_MODEL
     form_class = UserCreationForm
+
+    def form_valid(self, form):
+
+        user = authenticate(username=form.cleaned_data.get('email'),
+                            password=form.cleaned_data.get('password1'))
+        if user is not None:
+            login(request, user)
+
+        return super().form_valid(form)
+
 
 @login_required
 def edit_profile(request):
@@ -91,8 +101,8 @@ def edit_profile(request):
 
     return render(request,
                   'accounts/registration_form.html',
-                  {'form': form,
-                   'user': request.user
+                  {'form':form,
+                   'user':request.user
                    })
 
 
