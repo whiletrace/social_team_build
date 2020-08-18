@@ -75,6 +75,10 @@ class ProfileUserManager(BaseUserManager):
             last_name=last_name,
             date_of_birth=date_of_birth
             )
+
+        user.set_password(password)
+        # user instantiated and returned
+        user.save(using=self._db)
         # user set to admin
         user.is_admin = True
         # user instance is saved
