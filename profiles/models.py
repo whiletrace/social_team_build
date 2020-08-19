@@ -6,14 +6,9 @@ from django.urls import reverse
 # So this is going to be a model for profile
 # non auth related user information
 
-# Todo create model for User profile
-#   fields:
-#       Profile name : Charfield
-#       email: EmailField(value already grabbed by User model)
-#       skills: ManytoMany Field?
-#
 
-#Todo create funct Skills:
+
+# Todo create funct Skills:
 #  getorcreate for skills list
 #  if user has skill get skill
 #  if skill DoesNotExist createNewSkill

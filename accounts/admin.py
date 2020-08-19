@@ -13,6 +13,7 @@ class UserProfileInline(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'Users Profile'
+    max_num = 1
 
 
 class UserAdmin(BaseUserAdmin):
@@ -36,7 +37,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('first_name', 'last_name', 'date_of_birth', 'email',
-                       'email2', 'password1', 'password2')}),
+             'password1', 'password2')}),
         ('permissions', {'fields': ('is_active', 'is_admin')}),
     )
     search_fields = ('email',)

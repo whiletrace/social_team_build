@@ -6,6 +6,7 @@
         <list>
           <option value="django.contrib.auth.models.User.userprofile" />
           <option value="django.contrib.auth.models.User.profileuser" />
+          <option value="super.form_valid" />
         </list>
       </option>
     </inspection_tool>

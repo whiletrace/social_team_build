@@ -22,13 +22,10 @@ class CreateProfile(CreateView):
     model = UserProfile
     form_class = ProfileForm
 
-'''
+
 def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)'
-'''
-
-
+    form.instance.created_by = self.request.user
+    return super().form_valid(form)
 
 # Todo: edit profile
 #    handle logic for skills:
