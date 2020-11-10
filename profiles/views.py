@@ -1,31 +1,38 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
-from accounts.views import User
-from .models import UserProfile
 from .forms import ProfileForm
+from .models import UserProfile
 
 
 # views will handle logic for each URL
 # Todo: create profile
 #    handle logic for skills:
-#       display default list of skills
-#       user choosing skills
-#       user adding custom skills
-#   render template:
-#       form
-#       return userprofile object
-
-
+#
 class CreateProfile(CreateView):
     model = UserProfile
     form_class = ProfileForm
+    success_url = 'detail'
 
+    def form_valid(self, form):
+        import pdb;
 
-def form_valid(self, form):
-    form.instance.created_by = self.request.user
-    return super().form_valid(form)
+        pdb.set_trace()
+        chosen_skills = form.cleaned_data['skills']
+        username = form.cleaned_data['username']
+        bio = form.cleaned_data['bio']
+        avatar = form.cleaned_data['avatar']
+
+        profile = UserProfile(username=username, bio=bio, avatar=avatar,
+                              created_by_id=self.request.user.pk)
+        #profile.save()
+
+        for skill in chosen_skills:
+            profile.skills.add(skill)
+
+        return super().form_valid(form)
+
 
 # Todo: edit profile
 #    handle logic for skills:
@@ -41,10 +48,15 @@ def form_valid(self, form):
 class EditProfile(LoginRequiredMixin, UpdateView):
     model = UserProfile
 
-    fields = ['bio', 'avatar']
+    fields = ['bio', 'avatar', 'skills']
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 
 # Todo: Display Profile
@@ -65,7 +77,19 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 class ProfileView(LoginRequiredMixin, DetailView):
     model = UserProfile
 
+    queryset = model.objects.all()
+
+    context_object_name = 'profile'
+
+    def get_queryset(self):
+        query = self.queryset.prefetch_related('skills')
+
+        return query
+
     def get_object(self, queryset=None):
+        import pdb;
+
+        pdb.set_trace()
         """
         gets object whose data is to be outputted
 
@@ -78,5 +102,9 @@ class ProfileView(LoginRequiredMixin, DetailView):
         :return: User
         :rtype: user object
         """
+        #import pdb;pdb.set_trace()
 
-        return self.request.user
+        queryset = self.get_queryset()
+
+        data = queryset.filter(created_by_id=self.request.user.pk).get()
+        return data

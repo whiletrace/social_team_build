@@ -6,10 +6,8 @@ from django.urls import reverse
 # So this is going to be a model for profile
 # non auth related user information
 
-
-
-# Todo create funct Skills:
-#  getorcreate for skills list
+# Todo create function Skills:
+#  get or create for skills list
 #  if user has skill get skill
 #  if skill DoesNotExist createNewSkill
 #  default list of skills to chose from
@@ -17,6 +15,9 @@ from django.urls import reverse
 
 class Skills(models.Model):
     skill = models.CharField(blank=True, default='', max_length=25)
+
+    def __str__(self):
+        return self.skill
 
 
 class UserProfile(models.Model):
@@ -32,17 +33,14 @@ class UserProfile(models.Model):
     """
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        default="",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        unique=True
         )
     username = models.CharField(blank=True, default='', max_length=50)
     bio = models.TextField()
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
-    skills = models.ManyToManyField('Skills')
+    skills = models.ManyToManyField(Skills)
 
     def get_absolute_url(self):
-        return reverse('profiles:detail', kwargs={'pk': self.pk})
-
-
-
+        return reverse('profiles:detail')

@@ -1,20 +1,25 @@
 from django.forms.models import ModelForm, ModelMultipleChoiceField
 
-from .models import UserProfile, Skills
+from .models import Skills, UserProfile
+
+
 # This is where profile forms will live
 
 
 class ProfileForm(ModelForm):
+    skills = ModelMultipleChoiceField(queryset=Skills.objects.all())
+
+
     class Meta:
         model = UserProfile
-        fields = ['username', 'bio', 'avatar', 'skills']
+        fields = ['username', 'bio', 'avatar']
 
         exclude = ['created_by']
 
-# Todo create Profileform
+# Todo create Profile_form
 #   modelform?
 #   fields:
-#       profilename
+#       profile_name
 #       bio
 #       skills list
 #       avatar
