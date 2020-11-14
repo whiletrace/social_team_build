@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import FormView, UpdateView
 
 from .forms import ProfileForm
 from .models import UserProfile
@@ -10,26 +10,15 @@ from .models import UserProfile
 # Todo: create profile
 #    handle logic for skills:
 #
-class CreateProfile(CreateView):
+class CreateProfile(FormView):
     model = UserProfile
     form_class = ProfileForm
-    success_url = 'detail'
+    success_url = '/profiles/detail/'
 
     def form_valid(self, form):
-        import pdb;
-
-        pdb.set_trace()
-        chosen_skills = form.cleaned_data['skills']
-        username = form.cleaned_data['username']
-        bio = form.cleaned_data['bio']
-        avatar = form.cleaned_data['avatar']
-
-        profile = UserProfile(username=username, bio=bio, avatar=avatar,
-                              created_by_id=self.request.user.pk)
-        #profile.save()
-
-        for skill in chosen_skills:
-            profile.skills.add(skill)
+        form.instance.created_by = self.request.user
+        profile = form.save()
+        profile.skills.set(form.cleaned_data['skills'])
 
         return super().form_valid(form)
 
@@ -87,9 +76,7 @@ class ProfileView(LoginRequiredMixin, DetailView):
         return query
 
     def get_object(self, queryset=None):
-        import pdb;
 
-        pdb.set_trace()
         """
         gets object whose data is to be outputted
 
