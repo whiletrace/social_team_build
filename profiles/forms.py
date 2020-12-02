@@ -1,3 +1,4 @@
+from django import forms
 from django.forms.models import ModelForm, ModelMultipleChoiceField
 
 from .models import Skills, UserProfile
@@ -23,3 +24,16 @@ class ProfileForm(ModelForm):
 #       bio
 #       skills list
 #       avatar
+
+
+class SkillsForm(ProfileForm):
+    skills_list = forms.CharField(strip=True)
+
+    class Meta(ProfileForm.Meta):
+        exclude = ['username', 'created_by', 'bio', 'avatar', ]
+
+
+    def clean_skills_list(self):
+        data = self.cleaned_data['skills_list']
+
+        return data.split(',')
