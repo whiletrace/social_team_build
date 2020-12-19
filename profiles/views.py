@@ -65,9 +65,7 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = UserProfile
-
     queryset = model.objects.all()
-
     context_object_name = 'profile'
 
     def get_queryset(self):
@@ -76,7 +74,6 @@ class ProfileView(LoginRequiredMixin, DetailView):
         return query
 
     def get_object(self, queryset=None):
-
         """
         gets object whose data is to be outputted
 

@@ -18,7 +18,7 @@
       <excludeFolder url="file://$MODULE_DIR$/bin" />
       <excludeFolder url="file://$MODULE_DIR$/virtual_env" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (social_team_build)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.8 (social_team_build)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-2.2.0" level="application" />
   </component>

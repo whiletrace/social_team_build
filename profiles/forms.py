@@ -32,7 +32,6 @@ class SkillsForm(ProfileForm):
     class Meta(ProfileForm.Meta):
         exclude = ['username', 'created_by', 'bio', 'avatar', ]
 
-
     def clean_skills_list(self):
         data = self.cleaned_data['skills_list']
 
