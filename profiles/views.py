@@ -1,26 +1,47 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic.edit import FormView, UpdateView
+from django.shortcuts import render
 
-from .forms import ProfileForm
-from .models import UserProfile
+from .forms import ProfileForm, SkillsForm
+from .models import UserProfile, Skills
 
 
 # views will handle logic for each URL
 # Todo: create profile
 #    handle logic for skills:
 #
-class CreateProfile(FormView):
-    model = UserProfile
-    form_class = ProfileForm
-    success_url = '/profiles/detail/'
+def create_profile(request):
+    new_skills_list = []
+    breakpoint()
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        profile = form.save()
-        profile.skills.set(form.cleaned_data['skills'])
+    if request.method == 'POST':
+        f1 = ProfileForm(request.POST)
+        f2 = SkillsForm(request.POST)
+        if f1.is_valid():
+            f1.instance.created_by = request.user
+            profile = f1.save()
+            profile.skills.set(f1.cleaned_data['skills'])
+        if f2.is_valid():
+            f2.instance.created_by = request.user
+            data = f2.cleaned_data['skills_list']
 
-        return super().form_valid(form)
+            for entry in data:
+
+                new_skill = Skills.objects.get_or_create(skill=entry)
+                new_skills_list.append(new_skill)
+
+            skills = [new_skills_list[x][0] for x in range(len(new_skills_list))]
+
+
+
+
+    else:
+        form1 = ProfileForm()
+        form2 = SkillsForm()
+    return render(request, './profiles/profile_form.html', {'form1': form1,
+                                                            'form2': form2
+                                                          })
 
 
 # Todo: edit profile

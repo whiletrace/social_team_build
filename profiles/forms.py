@@ -6,15 +6,12 @@ from .models import Skills, UserProfile
 
 # This is where profile forms will live
 
-
 class ProfileForm(ModelForm):
-    skills = ModelMultipleChoiceField(queryset=Skills.objects.all())
-
+    skills = ModelMultipleChoiceField(queryset=Skills.objects.all(), required=False)
 
     class Meta:
         model = UserProfile
         fields = ['username', 'bio', 'avatar']
-
         exclude = ['created_by']
 
 # Todo create Profile_form
@@ -26,11 +23,13 @@ class ProfileForm(ModelForm):
 #       avatar
 
 
-class SkillsForm(ProfileForm):
-    skills_list = forms.CharField(strip=True)
+class SkillsForm(ModelForm):
+    skills_list = forms.CharField(strip=True, required=False)
 
-    class Meta(ProfileForm.Meta):
-        exclude = ['username', 'created_by', 'bio', 'avatar', ]
+    class Meta:
+        model = Skills
+
+        fields = ('skill',)
 
     def clean_skills_list(self):
         data = self.cleaned_data['skills_list']
