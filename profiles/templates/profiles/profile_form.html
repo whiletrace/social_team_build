@@ -3,7 +3,12 @@
 
     <form method="POST" action="">
         {% csrf_token %}
+        {{ form1.as_p }}
         {{ form2.as_p }}
+
+        {% if form1.errors %}
+            {{ form1.errors }}
+        {% endif %}
         {% if form2.errors %}
             {{ form2.errors }}
         {% endif %}

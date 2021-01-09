@@ -29,7 +29,7 @@ class SkillsForm(ModelForm):
     class Meta:
         model = Skills
 
-        fields = ('skill',)
+        fields = ('skills_list',)
 
     def clean_skills_list(self):
         data = self.cleaned_data['skills_list']

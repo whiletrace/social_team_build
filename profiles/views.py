@@ -12,33 +12,33 @@ from .models import UserProfile, Skills
 #    handle logic for skills:
 #
 def create_profile(request):
+
     new_skills_list = []
     breakpoint()
 
     if request.method == 'POST':
-        f1 = ProfileForm(request.POST)
-        f2 = SkillsForm(request.POST)
-        if f1.is_valid():
-            f1.instance.created_by = request.user
-            profile = f1.save()
-            profile.skills.set(f1.cleaned_data['skills'])
-        if f2.is_valid():
-            f2.instance.created_by = request.user
-            data = f2.cleaned_data['skills_list']
+        form1 = ProfileForm(request.POST)
+        form2 = SkillsForm(request.POST)
 
+        if form1.is_valid():
+            form1.instance.created_by = request.user
+            profile = form1.save()
+            profile.skills.set(form1.cleaned_data['skills'])
+
+        if form2.is_valid():
+            form2.instance.created_by = request.user
+            data = form2.cleaned_data['skills_list']
+            form2.save(commit=False)
             for entry in data:
-
                 new_skill = Skills.objects.get_or_create(skill=entry)
-                new_skills_list.append(new_skill)
-
-            skills = [new_skills_list[x][0] for x in range(len(new_skills_list))]
-
-
-
-
+                new_skills_list.append(new_skill[0])
+            user_profile = UserProfile.objects.get(created_by=request.user.id)
+            user_profile.skills.set(new_skills_list)
+            form2.save_m2m()
     else:
         form1 = ProfileForm()
         form2 = SkillsForm()
+
     return render(request, './profiles/profile_form.html', {'form1': form1,
                                                             'form2': form2
                                                           })
