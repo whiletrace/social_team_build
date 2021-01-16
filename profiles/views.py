@@ -9,7 +9,10 @@ from .models import UserProfile, Skills
 
 # views will handle logic for each URL
 # Todo: create profile
-#    handle logic for skills:
+#    possible refactor
+#    may just get rid of multichoice list
+#   seems redundant
+#   needs tests
 #
 def create_profile(request):
 
@@ -85,16 +88,13 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
+
     model = UserProfile
-    queryset = model.objects.all()
+    queryset = UserProfile.objects.all()
     context_object_name = 'profile'
 
-    def get_queryset(self):
-        query = self.queryset.prefetch_related('skills')
-
-        return query
-
-    def get_object(self, queryset=None):
+    def get_object(self, queryset=queryset):
+        breakpoint()
         """
         gets object whose data is to be outputted
 
@@ -107,9 +107,6 @@ class ProfileView(LoginRequiredMixin, DetailView):
         :return: User
         :rtype: user object
         """
-        #import pdb;pdb.set_trace()
 
-        queryset = self.get_queryset()
-
-        data = queryset.filter(created_by_id=self.request.user.pk).get()
+        data = queryset.prefetch_related('skills').filter(created_by_id=self.request.user.pk).get()
         return data

@@ -40,7 +40,7 @@ class UserProfile(models.Model):
     bio = models.TextField()
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
-    skills = models.ManyToManyField(Skills,related_name='profile_skills')
+    skills = models.ManyToManyField(Skills, related_name='profile_skills')
 
     def get_absolute_url(self):
         return reverse('profiles:detail')

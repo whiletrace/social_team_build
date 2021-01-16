@@ -29,10 +29,16 @@
         </p>
 
         <p>
-            skills: {{ profile.skills }}
-        </p>
+          skills: {% for skill in profile.skills.all %}
+            <ul>
+                <l>
+                    {{ skill }},
+                </l>
+            </ul>
 
+            {% endfor %}
 
+</p>
         <button onclick="window.location.href = '{% url 'profiles:edit_profile' %}';">edit profile</button>
     </div>
 {% endblock %}
