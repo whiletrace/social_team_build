@@ -1,33 +1,50 @@
-from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from django.views.generic.edit import FormView, UpdateView
+from django.shortcuts import render
 
-from accounts.views import User
-from .models import UserProfile
-from .forms import ProfileForm
+from .forms import ProfileForm, SkillsForm
+from .models import UserProfile, Skills
 
 
 # views will handle logic for each URL
 # Todo: create profile
-#    handle logic for skills:
-#       display default list of skills
-#       user choosing skills
-#       user adding custom skills
-#   render template:
-#       form
-#       return userprofile object
+#    possible refactor
+#    may just get rid of multichoice list
+#   seems redundant
+#   needs tests
+#
+def create_profile(request):
 
+    new_skills_list = []
+    breakpoint()
 
-class CreateProfile(CreateView):
-    model = UserProfile
-    form_class = ProfileForm
+    if request.method == 'POST':
+        form1 = ProfileForm(request.POST)
+        form2 = SkillsForm(request.POST)
 
-'''
-def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)'
-'''
+        if form1.is_valid():
+            form1.instance.created_by = request.user
+            profile = form1.save()
+            profile.skills.set(form1.cleaned_data['skills'])
 
+        if form2.is_valid():
+            form2.instance.created_by = request.user
+            data = form2.cleaned_data['skills_list']
+            form2.save(commit=False)
+            for entry in data:
+                new_skill = Skills.objects.get_or_create(skill=entry)
+                new_skills_list.append(new_skill[0])
+            user_profile = UserProfile.objects.get(created_by=request.user.id)
+            user_profile.skills.set(new_skills_list)
+            form2.save_m2m()
+    else:
+        form1 = ProfileForm()
+        form2 = SkillsForm()
+
+    return render(request, './profiles/profile_form.html', {'form1': form1,
+                                                            'form2': form2
+                                                          })
 
 
 # Todo: edit profile
@@ -44,10 +61,15 @@ def form_valid(self, form):
 class EditProfile(LoginRequiredMixin, UpdateView):
     model = UserProfile
 
-    fields = ['bio', 'avatar']
+    fields = ['bio', 'avatar', 'skills']
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 
 # Todo: Display Profile
@@ -66,9 +88,13 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
-    model = UserProfile
 
-    def get_object(self, queryset=None):
+    model = UserProfile
+    queryset = UserProfile.objects.all()
+    context_object_name = 'profile'
+
+    def get_object(self, queryset=queryset):
+        breakpoint()
         """
         gets object whose data is to be outputted
 
@@ -82,4 +108,5 @@ class ProfileView(LoginRequiredMixin, DetailView):
         :rtype: user object
         """
 
-        return self.request.user
+        data = queryset.prefetch_related('skills').filter(created_by_id=self.request.user.pk).get()
+        return data

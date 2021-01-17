@@ -2,27 +2,43 @@
 {% block content %}
 
     <div class="grid-75">
-        <h1>Welcome! {{object.first_name }} {{ object.last_name }}</h1>
+        <h1>Welcome! {{ object.created_by.first_name }} {{ object.created_by.last_name }}</h1>
         {% if object.userprofile.avatar %}
-       <p>
-           <img class="avatar" src="{{ object.userprofile.avatar.url }}" alt="an image of a man standing and smiling holding cup" >
-       </p>
+            <p>
+                <img class="avatar" src="{{ object.userprofile.avatar.url }}"
+                     alt="an image of a man standing and smiling holding cup">
+            </p>
         {% endif %}
         <p>
-            first name: {{ object.first_name }}
+            username: {{ profile.username }}
         </p>
         <p>
-            last name: {{ object.last_name }}
+            first name: {{ profile.created_by.first_name }}
         </p>
         <p>
-            email: {{ object.email }}
+            last name: {{ profile.created_by.last_name }}
         </p>
         <p>
-            birthday: {{ object.date_of_birth }}
+            email: {{ profile.created_by.email }}
         </p>
         <p>
-            bio: {{ object.userprofile.bio }}
+            birthday: {{ profile.created_by.date_of_birth }}
         </p>
-    <button onclick="window.location.href = '{% url 'profiles:edit_profile' %}';">edit profile</button>
+        <p>
+            bio: {{ profile.bio }}
+        </p>
+
+        <p>
+          skills: {% for skill in profile.skills.all %}
+            <ul>
+                <l>
+                    {{ skill }},
+                </l>
+            </ul>
+
+            {% endfor %}
+
+</p>
+        <button onclick="window.location.href = '{% url 'profiles:edit_profile' %}';">edit profile</button>
     </div>
 {% endblock %}

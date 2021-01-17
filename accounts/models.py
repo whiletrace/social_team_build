@@ -132,7 +132,7 @@ class NewUser(AbstractBaseUser):
     objects = ProfileUserManager()
 
     # does object instance have permissions True
-    def has_perm(self, perm, obj=None):
+    def has_perms(self, perm, obj=None):
         return True
 
     # does object instance have app_level permissions True

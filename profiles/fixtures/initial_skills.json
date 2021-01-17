@@ -1,0 +1,23 @@
+[
+  {
+    "model": "profiles.skills",
+    "pk": 1,
+    "fields": {
+      "skill": "OOP"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 2,
+    "fields": {
+      "skill": "design"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 3,
+    "fields": {
+      "skill": "javascript"
+    }
+  }
+]

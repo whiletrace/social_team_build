@@ -13,10 +13,10 @@ class UserProfileInline(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'Users Profile'
+    max_num = 1
 
 
 class UserAdmin(BaseUserAdmin):
-
     add_form = forms.UserCreationForm
 
     list_display = ('email', 'first_name', 'last_name', 'date_of_birth',
@@ -28,17 +28,18 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'fields': ('email', 'password')
             }),
-        ('permissions', {'fields': ('is_active', 'is_admin')})
+        ('permissions', {'fields':('is_active', 'is_admin')})
         )
     inlines = [UserProfileInline]
 
     add_fieldsets = (
         (None, {
-            'classes': ('wide',),
-            'fields': ('first_name', 'last_name', 'date_of_birth', 'email',
-                       'email2', 'password1', 'password2')}),
-        ('permissions', {'fields': ('is_active', 'is_admin')}),
-    )
+            'classes':('wide',),
+            'fields':('first_name', 'last_name', 'date_of_birth', 'email',
+                      'password1', 'password2')
+            }),
+        ('permissions', {'fields':('is_active', 'is_admin')}),
+        )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()

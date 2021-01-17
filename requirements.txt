@@ -1,6 +1,2 @@
-asgiref==3.2.7
-Django==3.0.6
-Pillow==7.1.2
-pytz==2020.1
-sqlparse==0.3.1
-style==1.1.6
+pytest~=6.2.1
+Django~=3.0.6

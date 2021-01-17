@@ -8,12 +8,14 @@ app_name = 'profiles'
 
 urlpatterns = [
 
-    # display profile
-    path('detail/', views.ProfileView.as_view(template_name='profiles/detail.html'),
-         name='detail'),
     # create profile
-    path('create_profile/', views.CreateProfile.as_view(
-        template_name='profiles/profile_form.html')),
+    path('create_profile/', views.create_profile),
+
+    # display profile
+    path('detail/',
+         views.ProfileView.as_view(template_name='profiles/detail.html'),
+         name='detail'),
+
     # edit profile
     path('edit_profile/', views.EditProfile.as_view(
         template_name='profiles/profile_form.html'

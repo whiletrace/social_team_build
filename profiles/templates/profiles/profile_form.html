@@ -1,10 +1,16 @@
 {% extends 'profiles/layout.html' %}
 {% block content %}
+
     <form method="POST" action="">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% if form.errors %}
-            {{ form.errors }}
+        {{ form1.as_p }}
+        {{ form2.as_p }}
+
+        {% if form1.errors %}
+            {{ form1.errors }}
+        {% endif %}
+        {% if form2.errors %}
+            {{ form2.errors }}
         {% endif %}
         <input type="submit" class="button" value="Save">
     </form>
