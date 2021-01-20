@@ -45,6 +45,7 @@ class CreateUser(CreateView):
     """
     model = settings.AUTH_USER_MODEL
     form_class = UserCreationForm
+    success_url = 'prof'
 
     def form_valid(self, form):
 
@@ -54,6 +55,7 @@ class CreateUser(CreateView):
             login(request, user)
 
         return super().form_valid(form)
+
 
 
 @login_required
