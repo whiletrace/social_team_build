@@ -17,7 +17,6 @@ from .models import UserProfile, Skills
 def create_profile(request):
 
     new_skills_list = []
-    breakpoint()
 
     if request.method == 'POST':
         form1 = ProfileForm(request.POST)

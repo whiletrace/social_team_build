@@ -4,6 +4,9 @@ import pytest
 User = get_user_model()
 
 
+pytest_plugins = ['testing.fixtures.profile_fixtures']
+
+
 @pytest.fixture
 def make_test_superuser():
     def _make_test_superuser():
@@ -17,7 +20,6 @@ def make_test_superuser():
         return super_user
 
     yield _make_test_superuser()
-
 
 
 @pytest.fixture()
