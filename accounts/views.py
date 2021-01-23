@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import request
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from accounts import forms
 from .forms import UserCreationForm
@@ -57,9 +57,7 @@ class CreateUser(CreateView):
         return super().form_valid(form)
 
 
-
-@login_required
-def edit_profile(request):
+class EditAccount(UpdateView):
     """
     view handles logic concerning update user data
 
@@ -80,32 +78,29 @@ def edit_profile(request):
     form : forms.modelform :type obj
     profile_form :forms.modelform :type obj
     """
-    # form instantiation and instance set to user
-    # forms retrieve user data from models
-    # fields are populated
-    user = request.user
-    form = forms.UserCreationForm(instance=user)
+    model = User
 
-    if request.method == 'POST':
-        form = forms.UserCreationForm(data=request.POST, instance=user)
-        # if form data is validated
-        # form data is saved user updated
-        if form.is_valid():
-            form.save()
-            # success message outputted informing of profiles update
-            messages.add_message(request, messages.SUCCESS,
-                                 'updated {} {}'.format
-                                 (form.cleaned_data['first_name'],
-                                  form.cleaned_data['last_name'])
-                                 )
+    fields = [ 'email', 'first_name',
+              'last_name', 'date_of_birth']
+
+    queryset = User.objects.all()
+
+    def get_object(self, queryset=queryset):
+
+        obj = queryset.get(id__exact=self.request.user.id)
+
+        return obj
+
+
+
+
+
+
+        # success message outputted informing of profiles update
+
             # user redirected to profiles
-            return HttpResponseRedirect(User().get_absolute_url())
 
-    return render(request,
-                  'accounts/registration_form.html',
-                  {'form':form,
-                   'user':request.user
-                   })
+
 
 
 # class based view subclassed from django generic DetailView

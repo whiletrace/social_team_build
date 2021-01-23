@@ -23,10 +23,8 @@ def test_is_instance(make_test_superuser):
 
     assert isinstance(jon, User)
 
+
 # create user
-
-
-
 @pytest.mark.django_db
 def test_user_not_admin(make_test_user):
     jon = make_test_user
@@ -42,9 +40,8 @@ def test_user_instance(make_test_user):
 
 
 # test User_form
-
 @pytest.mark.django_db
-def test_UserCreationForm_valid():
+def test_user_create_form_valid():
     form = UserCreationForm(data={'email': 'test@test.com',
                                   'email1': 'test@test.com',
                                   'first_name': 'test',
@@ -92,3 +89,16 @@ def test_post(client):
         })
 
     assert User.objects.last().first_name == 'test'
+
+#test user_update
+@pytest.mark.django_db
+def test_update(client, make_test_user):
+    user = make_test_user
+    client.force_login(user)
+    response = client.post('/accounts/edit_account/',
+                           {'email': 'trace@trace.com',
+                            'first_name': 'new_name',
+                            'last_name': 'another_new',
+                            'date_of_birth': '09/23/2009'})
+    user.refresh_from_db()
+    assert user.first_name == 'new_name'

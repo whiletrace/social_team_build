@@ -151,7 +151,6 @@ class UserCreationForm(forms.ModelForm):
         # user object is returned
         return user
 
-
     # Meta class Declares fields included in form
     # defines relationship with associated model class
     class Meta:
@@ -174,7 +173,6 @@ class UserChangeForm(forms.ModelForm):
     """
     password = ReadOnlyPasswordHashField()
 
-
     # Meta class Declares fields included in form
     # defines relationship with associated model class
     class Meta:
@@ -186,7 +184,6 @@ class UserChangeForm(forms.ModelForm):
             'is_active',
             'is_admin'
             )
-
 
     def clean_password(self):
         """
