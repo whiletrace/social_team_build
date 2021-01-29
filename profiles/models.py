@@ -40,7 +40,7 @@ class UserProfile(models.Model):
     skills = models.ManyToManyField('Skills')
 
     def get_absolute_url(self):
-        return reverse('profiles:detail', kwargs={'pk': self.pk})
+        return reverse('profiles:detail')
 
 
 

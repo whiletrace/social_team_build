@@ -1,12 +1,10 @@
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.http import request
-from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView
 
-from accounts import forms
+from django.http import request
+from django.shortcuts import reverse, redirect
+from django.views.generic import CreateView, DetailView, UpdateView
+
 from .forms import UserCreationForm
 
 User = get_user_model()
@@ -45,16 +43,25 @@ class CreateUser(CreateView):
     """
     model = settings.AUTH_USER_MODEL
     form_class = UserCreationForm
-    success_url = 'prof'
+
 
     def form_valid(self, form):
-
         user = authenticate(username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password1'))
         if user is not None:
             login(request, user)
 
         return super().form_valid(form)
+
+
+class AccountDet(DetailView):
+    queryset = User.objects.all()
+
+    def get_obj(self):
+        obj = super().get_object()
+        obj.id = self.request.user.id
+
+        return obj
 
 
 class EditAccount(UpdateView):
@@ -80,27 +87,19 @@ class EditAccount(UpdateView):
     """
     model = User
 
-    fields = [ 'email', 'first_name',
-              'last_name', 'date_of_birth']
+    fields = ['email', 'first_name', 'last_name', 'date_of_birth']
 
     queryset = User.objects.all()
 
     def get_object(self, queryset=queryset):
-
         obj = queryset.get(id__exact=self.request.user.id)
 
         return obj
 
 
-
-
-
-
         # success message outputted informing of profiles update
 
-            # user redirected to profiles
-
-
+        # user redirected to profiles
 
 
 # class based view subclassed from django generic DetailView

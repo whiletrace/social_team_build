@@ -90,9 +90,25 @@ def test_post(client):
 
     assert User.objects.last().first_name == 'test'
 
-#test user_update
+
 @pytest.mark.django_db
-def test_update(client, make_test_user):
+def test_post(client):
+    response = client.post('/accounts/user_register/', {
+        "email": 'test@test.com',
+        "email1": 'test@test.com',
+        "first_name": 'test',
+        "last_name": 'user',
+        "date_of_birth": '08/27/1975',
+        "password1": 'Traceh28@52122',
+        "password2": 'Traceh28@52122'
+        })
+
+    assert User.objects.last().first_name == 'test'
+
+
+    #test user_update
+@pytest.mark.django_db
+def test_redirect_success(client, make_test_user):
     user = make_test_user
     client.force_login(user)
     response = client.post('/accounts/edit_account/',
@@ -101,4 +117,19 @@ def test_update(client, make_test_user):
                             'last_name': 'another_new',
                             'date_of_birth': '09/23/2009'})
     user.refresh_from_db()
-    assert user.first_name == 'new_name'
+    assert response.status_code == 302
+
+
+    #test user_update
+@pytest.mark.django_db
+def test_redirect_URL(client, make_test_user):
+    user = make_test_user
+    client.force_login(user)
+    response = client.post('/accounts/edit_account/',
+                           {'email': 'trace@trace.com',
+                            'first_name': 'new_name',
+                            'last_name': 'another_new',
+                            'date_of_birth': '09/23/2009'})
+    user.refresh_from_db()
+
+    assert response['Location'] == '/accounts/user_reg_succ/1/'

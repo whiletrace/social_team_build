@@ -1,20 +1,18 @@
 {% extends 'profiles/layout.html' %}
+
 {% block content %}
 
     <form method="POST" action="">
         {% csrf_token %}
-        {{ form1.as_p }}
-        {{ form2.as_p }}
-
-        {% if form1.errors %}
-            {{ form1.errors }}
-        {% endif %}
-        {% if form2.errors %}
-            {{ form2.errors }}
+        {{ form.as_p }}
+        {% if form.errors %}
+            {{ form.errors }}
         {% endif %}
         <input type="submit" class="button" value="Save">
     </form>
+
     {% if user.is_authenticated %}
         <button onclick="window.location.href = '{% url 'accounts:change_password' %}';">change password</button>
     {% endif %}
+
 {% endblock %}

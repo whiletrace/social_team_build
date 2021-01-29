@@ -18,6 +18,10 @@ urlpatterns = [
          name='register_user'
          ),
 
+    path('user_reg_succ/<int:pk>/', views.AccountDet.as_view(
+        template_name='accounts/reg_success.html'
+        ), name="register_success"),
+
     path('edit_account/', views.EditAccount.as_view(
         template_name='accounts/registration_form.html'),
         name='edit_user'

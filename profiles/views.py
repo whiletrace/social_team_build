@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic.edit import FormView, UpdateView
 from django.shortcuts import render
-
-from .forms import ProfileForm, SkillsForm
+from django.contrib.auth import get_user_model
+from .forms import ProfileForm
 from .models import UserProfile, Skills
-
+User = get_user_model()
 
 # views will handle logic for each URL
 # Todo: create profile
@@ -14,36 +14,26 @@ from .models import UserProfile, Skills
 #   seems redundant
 #   needs tests
 #
+
 def create_profile(request):
 
-    new_skills_list = []
-
     if request.method == 'POST':
-        form1 = ProfileForm(request.POST)
-        form2 = SkillsForm(request.POST)
+        form = ProfileForm(request.POST)
 
-        if form1.is_valid():
-            form1.instance.created_by = request.user
-            profile = form1.save()
-            profile.skills.set(form1.cleaned_data['skills'])
+        if form.is_valid():
+            if request.user.is_authenticated:
+                form.instance.created_by = request.user
+                data = form.cleaned_data['skills']
+                profile = form.save()
+                profile.skills.set(data)
+            else:
+                print('user is not authenticated')
 
-        if form2.is_valid():
-            form2.instance.created_by = request.user
-            data = form2.cleaned_data['skills_list']
-            form2.save(commit=False)
-            for entry in data:
-                new_skill = Skills.objects.get_or_create(skill=entry)
-                new_skills_list.append(new_skill[0])
-            user_profile = UserProfile.objects.get(created_by=request.user.id)
-            user_profile.skills.set(new_skills_list)
-            form2.save_m2m()
+
     else:
-        form1 = ProfileForm()
-        form2 = SkillsForm()
+        form = ProfileForm()
 
-    return render(request, './profiles/profile_form.html', {'form1': form1,
-                                                            'form2': form2
-                                                          })
+    return render(request, 'profiles/profile_form.html', {'form': form})
 
 
 # Todo: edit profile
@@ -56,44 +46,26 @@ def create_profile(request):
 #       form
 #       return userprofile object
 
-
 class EditProfile(LoginRequiredMixin, UpdateView):
     model = UserProfile
 
-    fields = ['bio', 'avatar', 'skills']
+    fields = ['username', 'bio', 'avatar', 'skills']
 
-    def get_object(self, queryset=None):
-        return self.request.user
+    queryset = UserProfile.objects.all()
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        form.save()
-        return super().form_valid(form)
+    def get_object(self, queryset=queryset):
 
+        obj = queryset.get(id__exact=self.request.user.id)
 
-# Todo: Display Profile
-#   view function or class?
-#       method: GET
-#       interface with database through model objects
-#       read data from data base table (query)
-#       render data from database table to template
-#   search function:
-#       search form
-#       send search as database query
-#       display results of query
-#   render template:
-#       database query
-#       return query
+        return obj
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
 
     model = UserProfile
     queryset = UserProfile.objects.all()
-    context_object_name = 'profile'
 
     def get_object(self, queryset=queryset):
-        breakpoint()
         """
         gets object whose data is to be outputted
 
