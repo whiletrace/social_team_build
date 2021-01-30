@@ -10,33 +10,33 @@
             </p>
         {% endif %}
         <p>
-            username: {{ profile.username }}
+            username: {{ object.username }}
         </p>
         <p>
-            first name: {{ profile.created_by.first_name }}
+            first name: {{ ogject.created_by.first_name }}
         </p>
         <p>
-            last name: {{ profile.created_by.last_name }}
+            last name: {{ object.created_by.last_name }}
         </p>
         <p>
-            email: {{ profile.created_by.email }}
+            email: {{ object.created_by.email }}
         </p>
         <p>
-            birthday: {{ profile.created_by.date_of_birth }}
+            birthday: {{ object.created_by.date_of_birth }}
         </p>
         <p>
-            bio: {{ profile.bio }}
+            bio: {{ object.bio }}
         </p>
 
         <p>
-          skills: {% for skill in profile.skills.all %}
+          skills: {% for skill in object.skills.all%}
             <ul>
-                <l>
-                    {{ skill }},
-                </l>
+                <li>
+                    {{ skill.skill }}
+                </li>
             </ul>
+    {% endfor %}
 
-            {% endfor %}
 
 </p>
         <button onclick="window.location.href = '{% url 'profiles:edit_profile' %}';">edit profile</button>

@@ -5,15 +5,9 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from .forms import ProfileForm
 from .models import UserProfile, Skills
+
 User = get_user_model()
 
-# views will handle logic for each URL
-# Todo: create profile
-#    possible refactor
-#    may just get rid of multichoice list
-#   seems redundant
-#   needs tests
-#
 
 def create_profile(request):
 
@@ -21,14 +15,18 @@ def create_profile(request):
         form = ProfileForm(request.POST)
 
         if form.is_valid():
+            skills_list =[]
+            breakpoint()
             if request.user.is_authenticated:
                 form.instance.created_by = request.user
-                data = form.cleaned_data['skills']
+                data = form.cleaned_data['skills'].split(',')
                 profile = form.save()
-                profile.skills.set(data)
+                for item in data:
+                    saved_skill = Skills.objects.get_or_create(skill=item)
+                    profile.skills.add(saved_skill[0])
+
             else:
                 print('user is not authenticated')
-
 
     else:
         form = ProfileForm()
@@ -54,18 +52,17 @@ class EditProfile(LoginRequiredMixin, UpdateView):
     queryset = UserProfile.objects.all()
 
     def get_object(self, queryset=queryset):
-
         obj = queryset.get(id__exact=self.request.user.id)
 
         return obj
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
-
     model = UserProfile
-    queryset = UserProfile.objects.all()
+    queryset = UserProfile.objects.prefetch_related('skills').all()
 
     def get_object(self, queryset=queryset):
+        breakpoint()
         """
         gets object whose data is to be outputted
 
@@ -79,5 +76,5 @@ class ProfileView(LoginRequiredMixin, DetailView):
         :rtype: user object
         """
 
-        data = queryset.prefetch_related('skills').filter(created_by_id=self.request.user.pk).get()
-        return data
+        obj = queryset.get(created_by__id=self.request.user.id)
+        return obj

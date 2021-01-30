@@ -12,7 +12,7 @@ urlpatterns = [
     path('create_profile/', views.create_profile, name='create_profile'),
 
     # display profile
-    path('detail/',
+    path('detail/<int:pk>/',
          views.ProfileView.as_view(template_name='profiles/detail.html'),
          name='detail'),
 

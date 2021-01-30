@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model, authenticate, login
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import request
 from django.shortcuts import reverse, redirect
 from django.views.generic import CreateView, DetailView, UpdateView
@@ -44,17 +44,17 @@ class CreateUser(CreateView):
     model = settings.AUTH_USER_MODEL
     form_class = UserCreationForm
 
-
     def form_valid(self, form):
-        user = authenticate(username=form.cleaned_data.get('email'),
-                            password=form.cleaned_data.get('password1'))
-        if user is not None:
-            login(request, user)
+        valid = super().form_valid(form)
+        email, password = form.cleaned_data['email'],\
+                          form.cleaned_data['password1']
+        user = authenticate(email=email, password=password)
+        login(self.request, user)
 
-        return super().form_valid(form)
+        return valid
 
 
-class AccountDet(DetailView):
+class AccountDet(LoginRequiredMixin, DetailView):
     queryset = User.objects.all()
 
     def get_obj(self):
@@ -92,7 +92,7 @@ class EditAccount(UpdateView):
     queryset = User.objects.all()
 
     def get_object(self, queryset=queryset):
-        obj = queryset.get(id__exact=self.request.user.id)
+        obj = queryset.filter(id__exact=self.request.user.id).get()
 
         return obj
 

@@ -21,9 +21,9 @@
             Birthday: {{ object.date_of_birth }}
         </li>
     </ul>
-        <button onclick="window.location.href = '{% url 'accounts:edit_user' %}';"> edit acccount info</button>
+        <button onclick="window.location.href = '{% url 'accounts:edit_user'%}';"> edit acccount info</button>
         <button onclick="window.location.href = '{% url 'accounts:change_password' %}';"> change password</button>
-        <button onclick="window.location.href = '{% url 'profiles:create_profile' %}">create profile</button>
+        <button onclick="window.location.href = '{% url 'profiles:create_profile' %}';">create profile</button>
     </div>
 
 {% endblock %}

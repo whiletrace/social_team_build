@@ -28,19 +28,19 @@ class UserProfile(models.Model):
     avatar : model.ImageField :type obj
 
     """
-    created_by = models.ForeignKey(
+    created_by = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        default="",
+        default="", unique=True,
         on_delete=models.CASCADE
         )
     username = models.CharField(blank=True, default='', max_length=50)
     bio = models.TextField()
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
-    skills = models.ManyToManyField('Skills')
+    skills = models.ManyToManyField('Skills', related_name='profile_skills')
 
     def get_absolute_url(self):
-        return reverse('profiles:detail')
+        return reverse('profiles:detail', kwargs={'pk': self.pk})
 
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from django.forms.models import ModelForm, ModelMultipleChoiceField
+from django.forms.models import ModelForm
 
 from .models import UserProfile
 
@@ -13,3 +13,6 @@ class ProfileForm(ModelForm):
         model = UserProfile
         fields = ['username', 'bio', 'avatar']
         exclude = ['created_by']
+
+    def __str__(self):
+        return str.split(',')
