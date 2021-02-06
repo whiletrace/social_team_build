@@ -118,6 +118,7 @@ def test_redirect_success(client, make_test_user):
                             'date_of_birth': '09/23/2009'})
     user.refresh_from_db()
     assert response.status_code == 302
+    assert user.email == 'trace@trace.com'
 
 
     #test user_update

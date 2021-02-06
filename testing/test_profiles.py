@@ -3,8 +3,11 @@ from pytest_django.asserts import assertTemplateUsed
 # test models
 from profiles.models import Skills, UserProfile
 from django.contrib.auth import get_user_model
-from django.http import request
+from django.urls import reverse
+
 User = get_user_model()
+
+
 @pytest.mark.django_db
 def test_userprofile_model(make_test_profile):
     user = make_test_profile
@@ -40,10 +43,10 @@ def test_post(client, make_test_user):
     user = make_test_user
     client.force_login(user)
     response = client.post('/profiles/create_profile/', {
-        'created_by': make_test_user,
-        'username': 'bigguy',
-        'bio': 'this is bio and what of it',
-        'avatar': 'a picture here'
+        'created_by':make_test_user,
+        'username':'bigguy',
+        'bio':'this is bio and what of it',
+        'avatar':'a picture here'
         })
 
     assert UserProfile.objects.last().username == 'bigguy'
@@ -51,16 +54,25 @@ def test_post(client, make_test_user):
 
 #test profile_update
 @pytest.mark.django_db
-def test_profile_update(client, make_test_profile):
-
+def test_update_URL(client, make_test_profile):
     client.force_login(make_test_profile.created_by)
-    data = {
-        'created_by': make_test_profile.created_by,
-        'username': 'unguy',
-        'avatar':   'somepicture',
-        'bio': 'I made a change to the bio and I am proud',
-        'skills': 'skill1, skill2, skill3'
-        }
-    response = client.post('/profiles/edit_profile/', data=data)
+
+    response = client.get('/profiles/edit_profile/')
     print(response.client)
-    assert make_test_profile.username == 'unguy'
+    assert response.status_code == 200
+
+
+#test profile_update
+@pytest.mark.django_db
+def test_update_profile(client, make_test_user, make_test_profile):
+
+    client.force_login(make_test_user)
+    new_profile = make_test_profile
+
+    response = client.post(reverse('profiles:edit_profile'), {
+        'user_name':'unguy',
+        'avatar':'somepicture',
+        'bio': 'I made a change to the bio and I am proud'
+         })
+    new_profile.refresh_from_db()
+    assert new_profile.username == 'unguy'

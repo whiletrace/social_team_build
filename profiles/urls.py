@@ -17,8 +17,6 @@ urlpatterns = [
          name='detail'),
 
     # edit profile
-    path('edit_profile/', views.EditProfile.as_view(
-        template_name='profiles/profile_form.html'
-        ), name='edit_profile')
+    path('edit_profile/', views.edit_profile,  name='edit_profile')
 
     ]

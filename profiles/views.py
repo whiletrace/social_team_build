@@ -1,8 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
-from django.views.generic.edit import FormView, UpdateView
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404, render
 from .forms import ProfileForm
 from .models import UserProfile, Skills
 
@@ -15,8 +14,6 @@ def create_profile(request):
         form = ProfileForm(request.POST)
 
         if form.is_valid():
-            skills_list =[]
-            breakpoint()
             if request.user.is_authenticated:
                 form.instance.created_by = request.user
                 data = form.cleaned_data['skills'].split(',')
@@ -44,17 +41,21 @@ def create_profile(request):
 #       form
 #       return userprofile object
 
-class EditProfile(LoginRequiredMixin, UpdateView):
-    model = UserProfile
+def edit_profile(request):
+    breakpoint()
+    form = ProfileForm()
+    queryset = UserProfile.objects.all().prefetch_related('skills')
+    profile = get_object_or_404(queryset, created_by=request.user)
+    skill_list = [skill.skill for skill in profile.skills.all()]
+    if request.method == 'GET':
+        form = ProfileForm(instance=profile, initial={'skills': skill_list})
 
-    fields = ['username', 'bio', 'avatar', 'skills']
+        data = {
+        'username': 'trace'
 
-    queryset = UserProfile.objects.all()
+        }
 
-    def get_object(self, queryset=queryset):
-        obj = queryset.get(id__exact=self.request.user.id)
-
-        return obj
+    return render(request, 'profiles/profile_form.html', {'form': form})
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -62,7 +63,7 @@ class ProfileView(LoginRequiredMixin, DetailView):
     queryset = UserProfile.objects.prefetch_related('skills').all()
 
     def get_object(self, queryset=queryset):
-        breakpoint()
+
         """
         gets object whose data is to be outputted
 
