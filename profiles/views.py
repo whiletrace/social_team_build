@@ -47,8 +47,10 @@ def edit_profile(request):
     queryset = UserProfile.objects.all().prefetch_related('skills')
     profile = get_object_or_404(queryset, created_by=request.user)
     skill_list = [skill.skill for skill in profile.skills.all()]
+
+
     if request.method == 'GET':
-        form = ProfileForm(instance=profile, initial={'skills': skill_list})
+        form = ProfileForm(instance=profile, initial={'skills': ''.join(skill_list)})
 
         data = {
         'username': 'trace'
