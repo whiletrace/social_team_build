@@ -9,7 +9,6 @@ User = get_user_model()
 
 
 def create_profile(request):
-
     if request.method == 'POST':
         form = ProfileForm(request.POST)
 
@@ -28,7 +27,7 @@ def create_profile(request):
     else:
         form = ProfileForm()
 
-    return render(request, 'profiles/profile_form.html', {'form': form})
+    return render(request, 'profiles/profile_form.html', {'form':form})
 
 
 # Todo: edit profile
@@ -42,20 +41,28 @@ def create_profile(request):
 #       return userprofile object
 
 def edit_profile(request):
-    breakpoint()
-    form = ProfileForm()
     queryset = UserProfile.objects.all().prefetch_related('skills')
     profile = get_object_or_404(queryset, created_by=request.user)
     skill_list = [skill.skill for skill in profile.skills.all()]
 
-
     if request.method == 'GET':
-        form = ProfileForm(instance=profile, initial={'skills': ''.join(skill_list)})
+        form = ProfileForm(instance=profile,
+                           initial={'skills': ', '.join(skill_list)})
 
-        data = {
-        'username': 'trace'
-
-        }
+    elif request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile,
+                           initial={'skills': ', '.join(skill_list)})
+        if form.has_changed():
+            form.save(commit=False)
+            profile.skills.clear()
+            if form.is_valid():
+                data = form.cleaned_data['skills'].split(',')
+                for item in data:
+                    saved_skill = Skills.objects.get_or_create(skill=item)
+                    profile.skills.add(saved_skill[0])
+            form.save()
+    else:
+        form = ProfileForm()
 
     return render(request, 'profiles/profile_form.html', {'form': form})
 
@@ -65,7 +72,6 @@ class ProfileView(LoginRequiredMixin, DetailView):
     queryset = UserProfile.objects.prefetch_related('skills').all()
 
     def get_object(self, queryset=queryset):
-
         """
         gets object whose data is to be outputted
 

@@ -4,6 +4,7 @@ from pytest_django.asserts import assertTemplateUsed
 from profiles.models import Skills, UserProfile
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from profiles.forms import ProfileForm
 
 User = get_user_model()
 
@@ -69,10 +70,11 @@ def test_update_profile(client, make_test_user, make_test_profile):
     client.force_login(make_test_user)
     new_profile = make_test_profile
 
-    response = client.post(reverse('profiles:edit_profile'), {
-        'user_name':'unguy',
-        'avatar':'somepicture',
-        'bio': 'I made a change to the bio and I am proud'
-         })
+    data = {
+        'username': 'unguy',
+        'bio': 'this is a bio and its going to be good',
+        }
+
+    response = client.post(reverse('profiles:edit_profile'), data)
     new_profile.refresh_from_db()
     assert new_profile.username == 'unguy'
