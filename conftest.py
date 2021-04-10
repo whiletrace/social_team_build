@@ -1,10 +1,10 @@
-from django.contrib.auth import get_user_model
 import pytest
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
-pytest_plugins = ['testing.fixtures.profile_fixtures']
+pytest_plugins = ['testing.fixtures.profile_fixtures',
+                  'testing.fixtures.project_fixture']
 
 
 @pytest.fixture

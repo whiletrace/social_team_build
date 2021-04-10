@@ -1,9 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import DetailView
+
 from .forms import ProfileForm
-from .models import UserProfile, Skills
+from .models import Skills, UserProfile
 
 User = get_user_model()
 
@@ -29,16 +30,6 @@ def create_profile(request):
 
     return render(request, 'profiles/profile_form.html', {'form':form})
 
-
-# Todo: edit profile
-#    handle logic for skills:
-#       display Users chosen/added skills
-#       user deleting skills
-#       user adding new skills
-#       user updating skills
-#   render template:
-#       form
-#       return userprofile object
 
 def edit_profile(request):
     queryset = UserProfile.objects.all().prefetch_related('skills')

@@ -1,10 +1,10 @@
 import pytest
-from pytest_django.asserts import assertTemplateUsed
-# test models
-from profiles.models import Skills, UserProfile
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from profiles.forms import ProfileForm
+from pytest_django.asserts import assertTemplateUsed
+
+# test models
+from profiles.models import Skills, UserProfile
 
 User = get_user_model()
 

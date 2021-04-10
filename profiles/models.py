@@ -6,13 +6,6 @@ from django.urls import reverse
 # So this is going to be a model for profile
 # non auth related user information
 
-#Todo create funct Skills:
-#  getorcreate for skills list
-#  if user has skill get skill
-#  if skill DoesNotExist createNewSkill
-#  default list of skills to chose from
-
-
 class Skills(models.Model):
     skill = models.CharField(blank=True, default='', max_length=25)
 
