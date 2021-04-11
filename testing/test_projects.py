@@ -5,7 +5,14 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_Project_model(make_test_project):
+def test_project_model(make_test_project):
     project = make_test_project
 
     assert project.title == "BIGTITLE"
+
+
+@pytest.mark.django_db
+def test_create_project(client):
+    response = client.get('/projects/create_project/')
+
+    assert response.status_code == 302
