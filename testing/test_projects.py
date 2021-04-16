@@ -15,4 +15,4 @@ def test_project_model(make_test_project):
 def test_create_project(client):
     response = client.get('/projects/create_project/')
 
-    assert response.status_code == 302
+    assert response.status_code == 200

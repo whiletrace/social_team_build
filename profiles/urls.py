@@ -9,7 +9,7 @@ app_name = 'profiles'
 urlpatterns = [
 
     # create profile
-    path('create_profile/', views.create_profile, name='create_profile'),
+    path('create_profile/', views.create_profile, name='create_profile', ),
 
     # display profile
     path('detail/<int:pk>/',
@@ -17,6 +17,6 @@ urlpatterns = [
          name='detail'),
 
     # edit profile
-    path('edit_profile/', views.edit_profile,  name='edit_profile')
+    path('edit_profile/', views.edit_profile, name='edit_profile')
 
     ]

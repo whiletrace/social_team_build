@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView
 
 from .forms import ProfileForm
@@ -22,6 +22,7 @@ def create_profile(request):
                     saved_skill = Skills.objects.get_or_create(skill=item)
                     profile.skills.add(saved_skill[0])
 
+                redirect('profiles:detail', pk=profile.id)
             else:
                 print('user is not authenticated')
 
@@ -52,6 +53,7 @@ def edit_profile(request):
                     saved_skill = Skills.objects.get_or_create(skill=item)
                     profile.skills.add(saved_skill[0])
             form.save()
+        return redirect('profiles:detail', pk=profile.id)
     else:
         form = ProfileForm()
 
