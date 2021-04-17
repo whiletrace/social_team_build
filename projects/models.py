@@ -16,3 +16,15 @@ class UserProject(models.Model):
 
     def get_absolute_url(self):
         return reverse('profiles:detail', kwargs={'pk':self.pk})
+
+
+class Position(models.Model):
+    project = models.ForeignKey(UserProject, on_delete=models.CASCADE)
+    title = models.CharField()
+    description = models.TextField()
+
+
+class Applicant(models.Model):
+    name = models.CharField()
+    Status = models.BooleanField(default='')
+    position = models.ForeignKey(Position, on_delete=models.CASCADE)
