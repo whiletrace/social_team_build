@@ -20,11 +20,12 @@ class UserProject(models.Model):
 
 class Position(models.Model):
     project = models.ForeignKey(UserProject, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=150)
     description = models.TextField()
 
 
 class Applicant(models.Model):
-    name = models.CharField()
+    applicant = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                  on_delete=models.CASCADE)
     Status = models.BooleanField(default='')
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
