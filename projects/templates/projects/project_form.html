@@ -6,13 +6,14 @@
     {% csrf_token %}
     {{ form.as_p }}
     {% if form.errors %}
-    {{ form.errors }}
+        {{ form.errors }}
     {% endif %}
+    {{ position.as_p }}
     <input class="button" type="submit" value="Save">
 </form>
 
-{% if user.is_authenticated %}
-<button onclick="window.location.href = '{% url 'change_password' %}';">change password</button>
-{% endif %}
+    {% if user.is_authenticated %}
+        <button onclick="window.location.href = '{% url 'accounts:change_password' %}';">change password</button>
+    {% endif %}
 
 {% endblock %}

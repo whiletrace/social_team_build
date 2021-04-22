@@ -1,4 +1,12 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-def home(request):
-    return render(request, 'home.html')
+from projects.models import Position
+
+
+class Home(ListView):
+    model = Position
+
+    def get_queryset(self):
+        project_positions = Position.objects.all().select_related('project')
+
+        return project_positions

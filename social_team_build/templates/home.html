@@ -1,8 +1,38 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <div class="centered">
-        <h1 class="logo">
-            Social Team
-        </h1>
+    <div class="grid-25">
+        <div class="circle--filter circle--secondary--module">
+            <h4>Project Needs</h4>
+            <ul class="circle--filter--list">
+                <li><a class="selected">All Needs</a></li>
+                {% for position in object_list %}
+                    <li><a>{{ position.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+
+    <div class="grid-70 grid-push-5">
+        <table class="u-full-width circle--table">
+            <thead>
+            <tr>
+                <th>Project Title</th>
+                <th class="circle--cell--right">Project Needs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                <tr class="clickable-row" data-href="project.html">
+                    <td>
+                        <h3>{{ object.project.title }}</h3>
+                    </td>
+                    <td class="circle--cell--right">
+                        <span class="secondary-label">{{ object.title }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
 {% endblock %}
