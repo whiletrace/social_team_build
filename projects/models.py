@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 class UserProject(models.Model):
-    created_by = models.OneToOneField(
+    created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         default="", unique=True,
         on_delete=models.CASCADE
