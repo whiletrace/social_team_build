@@ -12,7 +12,6 @@ class CreateProject(LoginRequiredMixin, CreateView):
     template_name = 'projects/project_form.html'
 
     def get_context_data(self, **kwargs):
-        breakpoint()
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['position'] = project_position_formset(self.request.POST)
@@ -21,7 +20,8 @@ class CreateProject(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        breakpoint()
+        f = form.as_table()
+        print(f)
         context = self.get_context_data()
         position = context['position']
         with transaction.atomic():

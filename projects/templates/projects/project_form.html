@@ -1,16 +1,54 @@
 {% extends 'projects/layout.html' %}
 
 {% block content %}
+    <div class="circle--actions--bar">
+        <div class="bounds">
+            <div class="grid-100">
+                <a class="button button-primary" href="project.html">Save Project</a>
+                <a class="button button-text" href="index.html">Discard</a>
+            </div>
+        </div>
+    </div>
 
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if form.errors %}
-        {{ form.errors }}
-    {% endif %}
-    {{ position.as_p }}
-    <input class="button" type="submit" value="Save">
-</form>
+    <div class="bounds circle--page circle--article">
+        <div class="grid-70">
+            <form class="circle--article--body" action="" method="POST">
+                {% csrf_token %}
+                {{ form.title }}
+                {{ form.description }}
+                {% if form.errors %}
+                    {{ form.errors }}
+                {% endif %}
+                <div class="circle--project--positions">
+                    <h2>Positions</h2>
+                    <ul class="circle--group--list circle--clone--list">
+                        <li>
+                            {% for form in position %}
+                                {{ form.title }}
+                                {{ form.description }}
+                                <a class="circle--clone--add">Add Position</a>
+                                <a class="circle--clone--remove">Remove</a>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                    <input class="button" type="submit" value="Save">
+                </div>
+            </form>
+        </div>
+
+        <div class="grid-25 grid-push-5">
+
+            <div class="circle--secondary--module">
+                <h3>Project Timeline</h3>
+                {{ form.timeline }}
+            </div>
+
+            <div class="circle--secondary--module">
+                <h3>Applicant Requirements</h3>
+                {{ form.requirements }}
+            </div>
+        </div>
+    </div>
 
     {% if user.is_authenticated %}
         <button onclick="window.location.href = '{% url 'accounts:change_password' %}';">change password</button>
