@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             {% for object in object_list %}
-                <tr class="clickable-row" data-href="project.html">
+                <tr class="clickable-row" data-href="{% url 'projects:detail' pk=object.pk %}">
                     <td>
                         <h3>{{ object.project.title }}</h3>
                     </td>

@@ -6,7 +6,7 @@ from django.urls import reverse
 class UserProject(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        default="", unique=True,
+        default="",
         on_delete=models.CASCADE
         )
     title = models.CharField(blank=True, default='', max_length=50)

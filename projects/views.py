@@ -1,9 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from .forms import ProjectForm, project_position_formset
-from .models import UserProject
+from .models import Position, UserProject
 
 
 class CreateProject(LoginRequiredMixin, CreateView):
@@ -32,3 +32,20 @@ class CreateProject(LoginRequiredMixin, CreateView):
                 position.save()
 
         return super().form_valid(form)
+
+
+class ProjectDetail(DetailView):
+    model = UserProject
+    context_object_name = 'project'
+
+    def get_queryset(self):
+        query = UserProject.objects.all()
+
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['positions'] = Position.objects.filter(
+            project_id=self.object.id)
+
+        return context
