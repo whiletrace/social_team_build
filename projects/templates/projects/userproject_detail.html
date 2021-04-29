@@ -21,10 +21,15 @@
                         <li>
                             <h3>{{ position.title }}</h3>
                             <p>{{ position.description }}</p>
-                            <a class="button button-primary">Apply</a>
-                        </li>
+                            <a class="button button-primary" href="{% url 'projects:apply' position=position.id %}">Apply</a>
 
+                        </li>
                     {% endfor %}
+                    {% if message %}
+
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+                    {% endif %}
                 </ul>
             </div>
 

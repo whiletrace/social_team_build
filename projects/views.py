@@ -1,9 +1,12 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.shortcuts import redirect
+from django.views import View
 from django.views.generic import CreateView, DetailView
 
 from .forms import ProjectForm, project_position_formset
-from .models import Position, UserProject
+from .models import Applicant, Position, UserProject
 
 
 class CreateProject(LoginRequiredMixin, CreateView):
@@ -20,8 +23,6 @@ class CreateProject(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        f = form.as_table()
-        print(f)
         context = self.get_context_data()
         position = context['position']
         with transaction.atomic():
@@ -49,3 +50,15 @@ class ProjectDetail(DetailView):
             project_id=self.object.id)
 
         return context
+
+
+class CreateApplicant(View):
+    model = UserProject
+
+    def get(self, request, *args, **kwargs):
+        position = Position.objects.get(id=kwargs['position'])
+
+        Applicant(applicant=self.request.user,
+                  hired=False, position=position).save()
+        messages.success(request, 'Your application has been saved')
+        return redirect('projects:detail', pk=position.project.id)
