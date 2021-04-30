@@ -59,8 +59,10 @@
                         <li><a href="{% url 'accounts:login' %}">Sign In</a></li>
                         {% else %}
                         <!-- view profile link here? -->
-                        <!-- edit profile link here? -->
-                        <li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
+
+                            <!-- edit profile link here? -->
+
+                            <li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
                         {% endif %}
                     </ul>
                 </nav>
