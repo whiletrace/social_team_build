@@ -28,5 +28,5 @@ class Position(models.Model):
 class Applicant(models.Model):
     applicant = models.ForeignKey(settings.AUTH_USER_MODEL,
                                   on_delete=models.CASCADE)
-    hired = models.BooleanField(default='')
+    hired = models.BooleanField(default=False)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)

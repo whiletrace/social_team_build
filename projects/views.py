@@ -1,15 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+from django.http import request
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.detail import (
     SingleObjectMixin,
     SingleObjectTemplateResponseMixin
     )
-
-from .forms import ProjectForm, project_position_formset
+from django.forms import ModelChoiceField
+from .forms import ProjectForm, project_position_formset, ApplicantForm
 from .models import Applicant, Position, UserProject
 
 
@@ -56,6 +57,25 @@ class ProjectDetail(DetailView):
         return context
 
 
+def create_applicant(request, **kwargs):
+    breakpoint()
+    if request.method == 'POST':
+        form = ApplicantForm(request.POST)
+
+        if form.is_valid():
+            breakpoint()
+            position = Position.objects.get(id=kwargs['position'])
+            data = {
+                'applicant': request.user,
+                'hired': False,
+                'position': position
+            }
+            form.data = data
+            form.save()
+    else:
+        form = ApplicantForm()
+    return render(request, 'projects/userproject_detail.html', {'form': form} )
+"""
 class CreateApplicant(View):
     model = UserProject
 
@@ -66,6 +86,8 @@ class CreateApplicant(View):
                   hired=False, position=position).save()
         messages.success(request, 'Your application has been saved')
         return redirect('projects:detail', pk=position.project.id)
+
+"""
 
 
 class ApplicantList(ListView):

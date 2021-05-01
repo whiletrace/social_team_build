@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('detail/<int:pk>/', views.ProjectDetail.as_view(), name='detail'),
 
-    path('create_applicant/<int:position>/', views.CreateApplicant.as_view(),
+    path('create_applicant/<int:position>/', views.create_applicant,
          name='apply'),
 
     path('applicant_list/', views.ApplicantList.as_view(

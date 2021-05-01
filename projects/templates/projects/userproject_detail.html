@@ -21,8 +21,11 @@
                         <li>
                             <h3>{{ position.title }}</h3>
                             <p>{{ position.description }}</p>
-                            <a class="button button-primary" href="{% url 'projects:apply' position=position.id %}">Apply</a>
-
+                            <form action="{% url 'projects:apply' position=position.id %}" method="post">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input type="submit" value="Apply">
+                            </form>
                         </li>
                     {% endfor %}
                     {% if message %}
