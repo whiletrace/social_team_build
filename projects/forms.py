@@ -1,6 +1,7 @@
+from django import forms
 from django.forms import ModelForm, TextInput, Textarea, inlineformset_factory
 
-from .models import Position, UserProject, Applicant
+from .models import Position, UserProject
 
 
 class ProjectForm(ModelForm):
@@ -44,7 +45,6 @@ project_position_formset = inlineformset_factory(
     )
 
 
-class ApplicantForm(ModelForm):
-    class Meta:
-        model = Applicant
-        exclude = ['applicant', 'hired','position']
+class ApplicantForm(forms.Form):
+    position = forms.IntegerField(widget=forms.HiddenInput)
+    hired = forms.BooleanField(widget=forms.HiddenInput)

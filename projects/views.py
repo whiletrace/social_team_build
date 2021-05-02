@@ -1,16 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.shortcuts import redirect, render
-from django.http import request
+from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.detail import (
     SingleObjectMixin,
     SingleObjectTemplateResponseMixin
     )
-from django.forms import ModelChoiceField
-from .forms import ProjectForm, project_position_formset, ApplicantForm
+
+from .forms import ApplicantForm, ProjectForm, project_position_formset
 from .models import Applicant, Position, UserProject
 
 
@@ -50,14 +49,17 @@ class ProjectDetail(DetailView):
         return query
 
     def get_context_data(self, **kwargs):
+        form = ApplicantForm()
         context = super().get_context_data(**kwargs)
+        context['form'] = form
         context['positions'] = Position.objects.filter(
             project_id=self.object.id)
 
         return context
 
 
-def create_applicant(request, **kwargs):
+"""
+ef create_applicant(request, **kwargs):
     breakpoint()
     if request.method == 'POST':
         form = ApplicantForm(request.POST)
@@ -76,18 +78,19 @@ def create_applicant(request, **kwargs):
         form = ApplicantForm()
     return render(request, 'projects/userproject_detail.html', {'form': form} )
 """
+
+
 class CreateApplicant(View):
     model = UserProject
 
-    def get(self, request, *args, **kwargs):
-        position = Position.objects.get(id=kwargs['position'])
-
+    def post(self, request, *args, **kwargs):
+        breakpoint()
+        position_id = request.POST.get('position')
+        position = Position.objects.get(id=int(position_id))
         Applicant(applicant=self.request.user,
                   hired=False, position=position).save()
         messages.success(request, 'Your application has been saved')
-        return redirect('projects:detail', pk=position.project.id)
-
-"""
+        return redirect('projects:detail', pk=position.id)
 
 
 class ApplicantList(ListView):
@@ -110,7 +113,6 @@ class ApplicantList(ListView):
 
 class ApplicantApprove(SingleObjectMixin, SingleObjectTemplateResponseMixin,
                        View):
-
 
     def get_object(self, queryset=None, **kwargs):
         applicant = Applicant.objects.get(id=kwargs['pk'])

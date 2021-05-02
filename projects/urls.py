@@ -7,11 +7,11 @@ app_name = 'projects'
 urlpatterns = [
 
     path('create_project/', views.CreateProject.as_view(
-        template_name='projects/project_form.html')),
+        template_name='projects/project_form.html'), name='create_project'),
 
     path('detail/<int:pk>/', views.ProjectDetail.as_view(), name='detail'),
 
-    path('create_applicant/<int:position>/', views.create_applicant,
+    path('create_applicant/<int:position>/', views.CreateApplicant.as_view(),
          name='apply'),
 
     path('applicant_list/', views.ApplicantList.as_view(

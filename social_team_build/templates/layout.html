@@ -53,12 +53,21 @@
                 </div>
             </div>
             <div class="circle--fluid--cell circle--fluid--secondary">
-                <nav>
-                    <ul class="circle--inline">
-                        <li><a href="{% url 'accounts:register_user' %}">Sign Up</a></li>
-                        <li><a href="{% url 'accounts:login' %}">Sign In</a></li>
-                    </ul>
-                </nav>
+                {% if user.is_authenticated %}
+                    <nav>
+                        <ul class="circle--inline">
+                            <li><a href="{% url 'profiles:detail' pk=user.id %}">Profile</a></li>
+                            <li><a href="{% url 'accounts:logout' %}">Sign out</a></li>
+                        </ul>
+                    </nav>
+                {% else %}
+                    <nav>
+                        <ul class="circle--inline">
+                            <li><a href="{% url 'accounts:register_user' %}">Sign up</a></li>
+                            <li><a href="{% url 'accounts:login' %}">Sign in</a></li>
+                        </ul>
+                    </nav>
+                {% endif %}
             </div>
         </div>
     </div>

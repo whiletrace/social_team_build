@@ -22,9 +22,9 @@
                             <h3>{{ position.title }}</h3>
                             <p>{{ position.description }}</p>
                             <form action="{% url 'projects:apply' position=position.id %}" method="post">
+                                <input type="hidden" name="position" value='{{ position.id }}'/>
                                 {% csrf_token %}
-                                {{ form }}
-                                <input type="submit" value="Apply">
+                                <button class="button-primary">apply</button>
                             </form>
                         </li>
                     {% endfor %}

@@ -3,7 +3,7 @@
     <div class="circle--actions--bar">
         <nav class="bounds">
             <ul class="circle--pill--list">
-                <li><a href="applications.html">Applications</a></li>
+                <li><a href="{% url 'projects:applicants' %}">Applications</a></li>
                 <li><a class="selected" href='{% url 'profiles:detail' pk=userprofile.id %}'>Profile</a></li>
             </ul>
         </nav>
@@ -59,6 +59,7 @@
                 </td>
             </tr>
             </tbody>
+            <button><a href="{% url 'projects:create_project' %}">Create Project</a></button>
         </table>
     </div>
 

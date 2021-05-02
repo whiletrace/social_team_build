@@ -3,8 +3,8 @@
     <div class="circle--actions--bar">
         <nav class="bounds">
             <ul class="circle--pill--list">
-                <li><a class="selected" href="applications.html">Applications</a></li>
-                <li><a href="profile.html">Profile</a></li>
+                <li><a class="selected" href="{% url 'projects:applicants' %}">Applications</a></li>
+                <li><a href="{% url 'profiles:detail' pk=user.id %}">Profile</a></li>
             </ul>
         </nav>
     </div>
