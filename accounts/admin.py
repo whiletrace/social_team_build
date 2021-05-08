@@ -19,6 +19,8 @@ class UserProfileInline(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
     add_form = forms.UserCreationForm
 
+    form = forms.UserChangeForm
+
     list_display = ('email', 'first_name', 'last_name', 'date_of_birth',
                     'is_admin')
 
@@ -26,7 +28,7 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('email', 'password')
+            'fields':('email', 'password')
             }),
         ('permissions', {'fields':('is_active', 'is_admin')})
         )
@@ -35,8 +37,9 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes':('wide',),
-            'fields':('first_name', 'last_name', 'date_of_birth', 'email',
-                      'password1', 'password2')
+            'fields':(
+            'first_name', 'last_name', 'date_of_birth', 'email', 'email1',
+            'password1', 'password2',)
             }),
         ('permissions', {'fields':('is_active', 'is_admin')}),
         )

@@ -27,10 +27,11 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE
         )
     username = models.CharField(blank=True, default='', max_length=50)
-    bio = models.TextField()
+    bio = models.TextField(blank=True, default='')
     avatar = models.ImageField(blank=True, upload_to='user_profile')
 
-    skills = models.ManyToManyField('Skills', related_name='profile_skills')
+    skills = models.ManyToManyField('Skills', blank=True,
+                                    related_name='profile_skills')
 
     def get_absolute_url(self):
         return reverse('profiles:detail', kwargs={'pk': self.pk})
