@@ -58,33 +58,10 @@ class ProjectDetail(DetailView):
         return context
 
 
-"""
-ef create_applicant(request, **kwargs):
-    breakpoint()
-    if request.method == 'POST':
-        form = ApplicantForm(request.POST)
-
-        if form.is_valid():
-            breakpoint()
-            position = Position.objects.get(id=kwargs['position'])
-            data = {
-                'applicant': request.user,
-                'hired': False,
-                'position': position
-            }
-            form.data = data
-            form.save()
-    else:
-        form = ApplicantForm()
-    return render(request, 'projects/userproject_detail.html', {'form': form} )
-"""
-
-
 class CreateApplicant(View):
     model = UserProject
 
     def post(self, request, *args, **kwargs):
-        breakpoint()
         position_id = request.POST.get('position')
         position = Position.objects.get(id=int(position_id))
         Applicant(applicant=self.request.user,
@@ -120,19 +97,13 @@ class ApplicantApprove(SingleObjectMixin, SingleObjectTemplateResponseMixin,
         return applicant
 
     def get(self, request, *args, **kwargs):
-        breakpoint()
         applicant = Applicant.objects.get(id=kwargs['pk'])
         applicant.hired = True
         applicant.save()
         messages.success(request, 'Your application has been saved')
         return redirect('projects:applicants')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
 
-        context['approved'] = self.approve()
-        context['rejected'] = self.reject()
-        return context
 
 
 class ApplicantReject(SingleObjectMixin, SingleObjectTemplateResponseMixin,
@@ -146,9 +117,3 @@ class ApplicantReject(SingleObjectMixin, SingleObjectTemplateResponseMixin,
         messages.success(request, 'Your application has been saved')
         return redirect('projects:applicants')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['approved'] = self.approve()
-        context['rejected'] = self.reject()
-        return context

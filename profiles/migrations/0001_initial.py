@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                                         serialize=False, verbose_name='ID')),
                 ('bio', models.TextField()),
                 ('avatar',
-                 models.ImageField(blank=True, upload_to='user_profile')),
+                 models.ImageField(blank=True, upload_to='media')),
                 ('user', models.OneToOneField(
                     on_delete=django.db.models.deletion.CASCADE,
                     to=settings.AUTH_USER_MODEL)),

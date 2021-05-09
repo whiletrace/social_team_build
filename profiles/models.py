@@ -28,7 +28,7 @@ class UserProfile(models.Model):
         )
     username = models.CharField(blank=True, default='', max_length=50)
     bio = models.TextField(blank=True, default='')
-    avatar = models.ImageField(blank=True, upload_to='user_profile')
+    avatar = models.ImageField(blank=True, upload_to='media')
 
     skills = models.ManyToManyField('Skills', blank=True,
                                     related_name='profile_skills')
