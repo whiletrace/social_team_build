@@ -21,30 +21,28 @@
 
         <div class="grid-70">
             <h1>{{ object.created_by.first_name }} {{ object.created_by.last_name }}</h1>
-            {% if object.userprofile.avatar %}
-                <p>
-                    <img class="avatar" src="{{ object.userprofile.avatar.url }}"
-                         alt="an image of a man standing and smiling holding cup">
-                </p>
-            {% endif %}
-            <div class="circle--article--body"
-            <p>
-                bio: {{ object.bio }}
-            </p>
-        </div>
 
-        <h2>Past Projects</h2>
-        <table class="u-full-width circle--table">
-            <thead>
-            <tr>
-                <th>Project Title</th>
-                <th class="circle--cell--right">Project Needs</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="clickable-row" data-href="project.html">
-                <td>
-                    <h3>Invoice Delivery Tool</h3>
+
+            <div class="circle--article--body">
+                <p>
+                    bio: {{ object.bio }}
+                </p>
+
+            </div>
+
+
+            <h2>Past Projects</h2>
+            <table class="u-full-width circle--table">
+                <thead>
+                <tr>
+                    <th>Project Title</th>
+                    <th class="circle--cell--right">Project Needs</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="clickable-row" data-href="project.html">
+                    <td>
+                        <h3>Invoice Delivery Tool</h3>
                 </td>
                 <td class="circle--cell--right">
                     <span class="secondary-label">Rails Developer</span>
@@ -58,37 +56,40 @@
                     <span class="secondary-label">Designer</span>
                 </td>
             </tr>
-            </tbody>
-            <button><a href="{% url 'projects:create_project' %}">Create Project</a></button>
-        </table>
-    </div>
+                </tbody>
+                <button><a href="{% url 'projects:create_project' %}">Create Project</a></button>
+            </table>
+        </div>
 
-    <div class="grid-25 grid-push-5">
-        <div class="circle--secondary--module">
-            <div class="circle--primary--avatar">
-
+        <div class="grid-25 grid-push-5">
+            <div class="circle--secondary--module">
+                {% if object.avatar %}
+                    <img class="circle--primary--avatar" src="{{ object.avatar.url }}"
+                         alt="image of person who owns this profile">
+                {% endif %}
             </div>
-        </div>
 
-        <div class="circle--secondary--module">
-            <h4>My Skills</h4>
-            <ul class="unloaded">
-                {% for skill in object.skills.all %}
-                    <li>
-                        {{ skill.skill }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+            <div class="circle--secondary--module">
+                <h4>My Skills</h4>
+                <ul class="unloaded">
+                    {% for skill in object.skills.all %}
+                        <li>
+                            {{ skill.skill }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-        <div class="circle--secondary--module">
-            <h4>My Projects</h4>
-            <ul class="circle--link--list">
-                <li><a>figure out how to import projects to this template</a></li>
-                <li><a>Project 2</a></li>
-                <li><a>Project 3</a></li>
-                <li><a>Project 4</a></li>
-            </ul>
+            <div class="circle--secondary--module">
+                <h4>My Projects</h4>
+                <ul class="circle--link--list">
+                    <li><a>figure out how to import projects to this template</a></li>
+                    <li><a>Project 2</a></li>
+                    <li><a>Project 3</a></li>
+                    <li><a>Project 4</a></li>
+                </ul>
+            </div>
+
         </div>
     </div>
 {% endblock %}
