@@ -104,11 +104,8 @@ class ApplicantApprove(SingleObjectMixin, SingleObjectTemplateResponseMixin,
         return redirect('projects:applicants')
 
 
-
-
 class ApplicantReject(SingleObjectMixin, SingleObjectTemplateResponseMixin,
                       View):
-
 
     def get(self, request, *args, **kwargs):
         applicant = Applicant.objects.get(id=kwargs['pk'])
