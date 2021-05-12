@@ -1,26 +1,34 @@
 $( document ).ready(function() {
 
-  $('textarea').autogrow({onInitialize: true});
+    $('textarea').autogrow({onInitialize: true});
 
+    let positionForm = document.querySelectorAll('#position_form');
+    let totalForms = document.querySelector('#id_form-TOTAL_FORMS');
+    let formNum = positionForm.length - 1
 
-  //Cloner for infinite input lists
-  $(".circle--clone--list").on("click", ".circle--clone--add", function(){
-    var parent = $(this).parent("li");
-    var copy = parent.clone();
-    parent.after(copy);
-    copy.find("input, textarea, select").val("");
-    copy.find("*:first-child").focus();
-  });
+    //Cloner for infinite input lists
+    $(".circle--clone--list").on("click", ".circle--clone--add", function () {
+        var parent = $(this).parent("li");
+        var copy = parent.clone();
+        let formRegex = RegExp(`form-(\\d){1}-`, 'g');
 
-  $(".circle--clone--list").on("click", "li:not(:only-child) .circle--clone--remove", function(){
-    var parent = $(this).parent("li");
-    parent.remove();
-  });
+        parent.after(copy);
+        copy.innerHTML = copy.innerHTML.replace(formRegex, 'form-${formNum}-1');
+        document.write(copy.innerHTML)
+        copy.find("input, textarea, select").val("");
+        copy.find("*:first-child").focus();
+        totalForms.setAttribute('value', '${formNum+1}')
+    });
 
-  // Adds class to selected item
-  $(".circle--pill--list a").click(function() {
-    $(".circle--pill--list a").removeClass("selected");
-    $(this).addClass("selected");
+    $(".circle--clone--list").on("click", "li:not(:only-child) .circle--clone--remove", function () {
+        var parent = $(this).parent("li");
+        parent.remove();
+    });
+
+    // Adds class to selected item
+    $(".circle--pill--list a").click(function () {
+        $(".circle--pill--list a").removeClass("selected");
+        $(this).addClass("selected");
   });
 
   // Adds class to parent div of select menu
