@@ -33,7 +33,7 @@ project_position_formset = inlineformset_factory(
     parent_model=UserProject,
     model=Position,
     form=PositionForm,
-    fields=['title', 'description'],
+    fields=('title', 'description',),
     widgets={
         'title':TextInput(attrs={'class':'circle--input--h3',
                                  'placeholder':'Position Title'

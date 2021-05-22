@@ -4,7 +4,7 @@
     <div class="circle--actions--bar">
         <div class="bounds">
             <div class="grid-100">
-                <a class="button button-primary" href="project.html">Save Project</a>
+                <a id="save-project" class="button button-primary">Save Project</a>>
                 <a class="button button-text" href="index.html">Discard</a>
             </div>
         </div>
@@ -12,7 +12,7 @@
 
     <div class="bounds circle--page circle--article">
         <div class="grid-70">
-            <form class="circle--article--body" action="" method="POST">
+            <form id="my-form" class="circle--article--body" action="" method="POST">
                 {% csrf_token %}
                 {{ form.title }}
                 {{ form.description }}
@@ -21,16 +21,25 @@
                 {% endif %}
                 <div class="circle--project--positions">
                     <h2>Positions</h2>
-                    <ul class="circle--group--list circle--clone--list">
-                        {{ position.management_form }}
-                        {% for form in position %}
-                            <li id="position_form">
-                            {{ form.as_p }}
-                            <a class="circle--clone--add">Add Position</a>
-                            <a class="circle--clone--remove">Remove</a>
+                    <ul id="formset-ul" class="circle--group--list circle--clone--list">
+                        {{ formset.management_form }}
+                        {% for form in formset %}
+                            <li>
+                                {{ form.title }}
+                                {{ form.description }}
+                                <a class="remove-position">Remove</a>
+                            </li>
+
                         {% endfor %}
-                        </li>
                     </ul>
+                    <button id="add-position" class="circle--clone--add">Add Position</button>
+                    <div id="empty-form" hidden=True>
+                        {{ formset.empty_form.title }}
+                        {{ formset.empty_form.description }}
+                        <!-- {{ formset.empty_form.DELETE }} -->
+                        <a class="remove-position">Remove</a>
+
+                    </div>
                     <input class="button" type="submit" value="Save">
                 </div>
             </form>
@@ -53,5 +62,46 @@
     {% if user.is_authenticated %}
         <button onclick="window.location.href = '{% url 'accounts:change_password' %}';">change password</button>
     {% endif %}
+    <script>
+        const myForm = document.getElementById('my-form');
+        const saveProject = document.getElementById('save-project')
+        const formset_container = document.getElementById('formset-ul');
+        const totalForms = document.getElementById('id_position_set-TOTAL_FORMS');
+        const emptyForm = document.getElementById('empty-form').innerHTML;
+        const addButton = document.getElementById('add-position');
+        const removeButtons = document.querySelectorAll('.remove-position');
+        const formRegex = RegExp(`__prefix__`, 'g');
+        let formNumber = formset_container.querySelectorAll('li').length - 1;
 
+        function addForm(e) {
+            e.preventDefault();
+            const newForm = document.createElement('li');
+            newForm.innerHTML = emptyForm;
+            formNumber++
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, formNumber);
+            formset_container.appendChild(newForm);
+            totalForms.setAttribute('value', formNumber + 1);
+        }
+
+        function removeForm(e) {
+            e.preventDefault();
+            let form = e.target.parentElement;
+            let deleteBox = form.querySelector("input[type='checkbox']");
+            deleteBox.checked = true;
+            form.style.display = 'none';
+        }
+
+
+        addButton.addEventListener('click', addForm);
+
+        formset_container.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-position')) {
+                removeForm(e);
+            }
+        })
+        saveProject.addEventListener('click', () => {
+            myForm.submit();
+        })
+
+    </script>
 {% endblock %}

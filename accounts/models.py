@@ -127,7 +127,7 @@ class NewUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['date_of_birth', 'first_name', 'last_name']
 
     objects = ProfileUserManager()
 

@@ -1,9 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import transaction
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views import View
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import DetailView, ListView
 from django.views.generic.detail import (
     SingleObjectMixin,
     SingleObjectTemplateResponseMixin
@@ -13,34 +11,56 @@ from .forms import ApplicantForm, ProjectForm, project_position_formset
 from .models import Applicant, Position, UserProject
 
 
-class CreateProject(LoginRequiredMixin, CreateView):
-    model = UserProject
-    form_class = ProjectForm
-    template_name = 'projects/project_form.html'
+def create_project(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
 
-    def get_context_data(self, **kwargs):
+        if form.is_valid():
+            breakpoint()
+            form.instance.created_by = request.user
+            saved_project = form.save()
+            project = UserProject.objects.get(id=saved_project.id)
+            formset = project_position_formset(request.POST, instance=project)
+            if formset.is_valid():
+                formset.save()
+            return redirect('home')
 
-        context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['position'] = project_position_formset(self.request.POST)
-        else:
-            context['position'] = project_position_formset()
-        return context
+    else:
+        form = ProjectForm()
+        formset = project_position_formset()
 
-    def form_valid(self, form):
+    return render(request, 'projects/project_form.html', {'form':form,
+                                                          'formset':formset
+                                                          })
 
-        context = self.get_context_data()
-        positions = context['position']
-        with transaction.atomic():
-            form.instance.created_by = self.request.user
-            created_project = form.save()
 
-            for position in positions:
-                position.instance = created_project
-                position.save()
+'''
+User = get_user_model()
 
-        return super().form_valid(form)
 
+def create_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+
+        if form.is_valid():
+            if request.user.is_authenticated:
+                form.instance.created_by = request.user
+                data = form.cleaned_data['skills'].split(',')
+                profile = form.save()
+                for item in data:
+                    saved_skill = Skills.objects.get_or_create(skill=item)
+                    profile.skills.add(saved_skill[0])
+
+                redirect('profiles:detail', pk=profile.id)
+            else:
+                print('user is not authenticated')
+
+    else:
+        form = ProfileForm()
+
+    return render(request, 'profiles/profile_form.html', {'form': form})
+
+'''
 
 class ProjectDetail(DetailView):
     model = UserProject
