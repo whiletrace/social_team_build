@@ -16,7 +16,6 @@ def create_project(request):
         form = ProjectForm(request.POST)
 
         if form.is_valid():
-            breakpoint()
             form.instance.created_by = request.user
             saved_project = form.save()
             project = UserProject.objects.get(id=saved_project.id)
@@ -33,34 +32,6 @@ def create_project(request):
                                                           'formset':formset
                                                           })
 
-
-'''
-User = get_user_model()
-
-
-def create_profile(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST)
-
-        if form.is_valid():
-            if request.user.is_authenticated:
-                form.instance.created_by = request.user
-                data = form.cleaned_data['skills'].split(',')
-                profile = form.save()
-                for item in data:
-                    saved_skill = Skills.objects.get_or_create(skill=item)
-                    profile.skills.add(saved_skill[0])
-
-                redirect('profiles:detail', pk=profile.id)
-            else:
-                print('user is not authenticated')
-
-    else:
-        form = ProfileForm()
-
-    return render(request, 'profiles/profile_form.html', {'form': form})
-
-'''
 
 class ProjectDetail(DetailView):
     model = UserProject
