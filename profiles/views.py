@@ -11,7 +11,7 @@ User = get_user_model()
 
 def create_profile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
             if request.user.is_authenticated:
@@ -33,6 +33,7 @@ def create_profile(request):
 
 
 def edit_profile(request):
+
     queryset = UserProfile.objects.all().prefetch_related('skills')
     profile = get_object_or_404(queryset, created_by=request.user)
     skill_list = [skill.skill for skill in profile.skills.all()]
@@ -42,8 +43,8 @@ def edit_profile(request):
                            initial={'skills': ', '.join(skill_list)})
 
     elif request.method == 'POST':
-        form = ProfileForm(request.POST, instance=profile,
-                           initial={'skills': ', '.join(skill_list)})
+        form = ProfileForm(request.POST, request.FILES, instance=profile,
+                           initial={'skills':', '.join(skill_list)})
         if form.has_changed():
             form.save(commit=False)
             profile.skills.clear()
@@ -65,7 +66,6 @@ class ProfileView(LoginRequiredMixin, DetailView):
     queryset = UserProfile.objects.prefetch_related('skills').all()
 
     def get_object(self, queryset=queryset):
-        breakpoint()
         """
         gets object whose data is to be outputted
 
