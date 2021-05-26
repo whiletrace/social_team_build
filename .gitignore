@@ -90,7 +90,7 @@ ENV/
 env.bak/
 venv.bak/
 virtual_env/
-media/
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -100,6 +100,15 @@ media/
 
 # mkdocs documentation
 /site
+# media files
+.jpg
+.eps
+.png
+.pdf
+.tiff
+.ai
+.indd
+.raw
 
 # mypy
 .mypy_cache/

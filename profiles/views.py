@@ -65,6 +65,7 @@ class ProfileView(LoginRequiredMixin, DetailView):
     queryset = UserProfile.objects.prefetch_related('skills').all()
 
     def get_object(self, queryset=queryset):
+        breakpoint()
         """
         gets object whose data is to be outputted
 
