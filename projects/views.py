@@ -60,8 +60,9 @@ class CreateApplicant(View):
         position = Position.objects.get(id=int(position_id))
         Applicant(applicant=self.request.user,
                   hired=False, position=position).save()
-        messages.success(request, 'Your application has been saved')
-        return redirect('projects:detail', pk=position.id)
+        messages.add_message(request, messages.SUCCESS,
+                             'your application has been recieved')
+        return redirect('projects:detail', pk=position.project_id)
 
 
 class ApplicantList(ListView):
