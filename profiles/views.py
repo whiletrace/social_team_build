@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView
 
+from projects.models import Applicant
 from .forms import ProfileForm
 from .models import Skills, UserProfile
 
@@ -64,6 +65,12 @@ def edit_profile(request):
 class ProfileView(LoginRequiredMixin, DetailView):
     model = UserProfile
     queryset = UserProfile.objects.prefetch_related('skills').all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['positions_applied'] = Applicant.objects.filter(
+            applicant_id=self.request.user)
+        return context
 
     def get_object(self, queryset=queryset):
         """

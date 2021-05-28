@@ -5,11 +5,20 @@
     </div>
 
     <div class="grid-70 grid-push-5">
+
         <table class="u-full-width circle--table">
             <thead>
+
             <tr>
                 <th>Project Title</th>
                 <th class="circle--cell--right">Project Needs</th>
+                {% if user.is_authenticated %}
+                    <div class="align-right">
+                        <button><a href="{% url 'projects:create_project' %}">Create Project</a></button>
+                    </div>
+
+                {% endif %}
+                <h2>Projects</h2>
             </tr>
             </thead>
             <tbody>
