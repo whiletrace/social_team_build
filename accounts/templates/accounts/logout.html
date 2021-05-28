@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block content  %}
+{% block content %}
 
     <div class="grid-75">
-    <h4>  you have been logged out</h4>
-    <button onclick="window.location.href = '{% url 'user_profile:login' %}';">sign in</button>
+        <h4> you have been logged out</h4>
+        <button onclick="window.location.href = '{% url 'accounts:login' %}';">sign in</button>
     </div>
 
 {% endblock %}

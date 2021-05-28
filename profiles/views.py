@@ -5,7 +5,7 @@ from django.views.generic import DetailView
 
 from projects.models import Applicant
 from .forms import ProfileForm
-from .models import Skills, UserProfile
+from .models import UserProfile
 
 User = get_user_model()
 
@@ -15,20 +15,14 @@ def create_profile(request):
         form = ProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
-            if request.user.is_authenticated:
-                form.instance.created_by = request.user
-                data = form.cleaned_data['skills'].split(',')
-                skills_data = form.cleaned_data['skills_list']
-                profile = form.save()
-                for item in data:
-                    saved_skill = Skills.objects.get_or_create(skill=item)
-                    profile.skills.add(saved_skill[0])
-                for item in skills_data:
-                    profile.skills.add(item)
 
-                redirect('profiles:detail', pk=profile.id)
-            else:
-                print('user is not authenticated')
+            form.instance.created_by = request.user
+
+            skills = form.cleaned_data['skills']
+            profile = form.save()
+            for item in skills:
+                profile.skills.add(item)
+        return redirect('profiles:detail', pk=profile.id)
 
     else:
         form = ProfileForm()
@@ -40,26 +34,20 @@ def edit_profile(request):
 
     queryset = UserProfile.objects.all().prefetch_related('skills')
     profile = get_object_or_404(queryset, created_by=request.user)
-    skill_list = [skill.skill for skill in profile.skills.all()]
 
     if request.method == 'GET':
-        form = ProfileForm(instance=profile,
-                           initial={'skills': ', '.join(skill_list)})
+        form = ProfileForm(instance=profile)
 
     elif request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile,
-                           initial={'skills':', '.join(skill_list)})
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.has_changed():
             form.save(commit=False)
-            profile.skills.clear()
             if form.is_valid():
-                data = form.cleaned_data['skills'].split(',')
-                skills_data = form.cleaned_data['skills_list']
+                data = form.cleaned_data['skills']
+
                 for item in data:
-                    saved_skill = Skills.objects.get_or_create(skill=item)
-                    profile.skills.add(saved_skill[0])
-                for item in skills_data:
                     profile.skills.add(item)
+
             form.save()
         return redirect('profiles:detail', pk=profile.id)
     else:
