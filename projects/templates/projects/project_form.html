@@ -1,11 +1,11 @@
-{% extends 'projects/layout.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="circle--actions--bar">
         <div class="bounds">
             <div class="grid-100">
                 <a id="save-project" class="button button-primary">Save Project</a>>
-                <a class="button button-text" href="index.html">Discard</a>
+                <a class="button button-text" href='/'>Discard</a>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
                         {% endfor %}
                     </ul>
                     <button id="add-position" class="circle--clone--add">Add Position</button>
-                    <div id="empty-form" hidden=True>
+                    <div id="empty-form" hidden>
                         {{ formset.empty_form.title }}
                         {{ formset.empty_form.description }}
                         <!-- {{ formset.empty_form.DELETE }} -->

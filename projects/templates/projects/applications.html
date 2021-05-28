@@ -1,4 +1,4 @@
-{% extends 'projects/layout.html' %}
+{% extends 'base.html' %}
 {% block content %}
     <div class="circle--actions--bar">
         <nav class="bounds">
@@ -64,7 +64,7 @@
                     <tr class="clickable-row">
                         <td>
                             <h3>
-                                <a href="{% url 'profiles:detail' pk=applicant.applicant.id %}"">{{ applicant.applicant.userprofile.username }}</a>
+                                <a href="{% url 'profiles:detail' pk=applicant.applicant.id %}">{{ applicant.applicant.userprofile.username }}</a>
                             </h3>
                             <p>{{ applicant.position.project.title }}</p>
                         </td>
