@@ -9,6 +9,9 @@ from django.urls import reverse
 class Skills(models.Model):
     skill = models.CharField(blank=True, default='', max_length=25)
 
+    def __str__(self):
+        return self.skill
+
 
 class UserProfile(models.Model):
     """

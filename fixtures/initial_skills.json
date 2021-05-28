@@ -19,5 +19,26 @@
     "fields": {
       "skill": "javascript"
     }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 4,
+    "fields": {
+      "skill": "Python"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 5,
+    "fields": {
+      "skill": "Virtual Reality Development"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 6,
+    "fields": {
+      "skill": "Django"
+    }
   }
 ]

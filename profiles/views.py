@@ -18,10 +18,13 @@ def create_profile(request):
             if request.user.is_authenticated:
                 form.instance.created_by = request.user
                 data = form.cleaned_data['skills'].split(',')
+                skills_data = form.cleaned_data['skills_list']
                 profile = form.save()
                 for item in data:
                     saved_skill = Skills.objects.get_or_create(skill=item)
                     profile.skills.add(saved_skill[0])
+                for item in skills_data:
+                    profile.skills.add(item)
 
                 redirect('profiles:detail', pk=profile.id)
             else:
@@ -51,9 +54,12 @@ def edit_profile(request):
             profile.skills.clear()
             if form.is_valid():
                 data = form.cleaned_data['skills'].split(',')
+                skills_data = form.cleaned_data['skills_list']
                 for item in data:
                     saved_skill = Skills.objects.get_or_create(skill=item)
                     profile.skills.add(saved_skill[0])
+                for item in skills_data:
+                    profile.skills.add(item)
             form.save()
         return redirect('profiles:detail', pk=profile.id)
     else:
