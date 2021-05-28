@@ -52,6 +52,10 @@
                         <td class="circle--cell--right">
                             {% if position.hired == True %}
                                 <span class="secondary-label">Congratulations!! </span>
+                            {% elif position.hired == False %}
+                                <span class="secondary-label">Consolation puppy </span>
+                            {% else %}
+                                <span class="secondary-label">fingers crossed </span>
                             {% endif %}
                         </td>
                     </tr>

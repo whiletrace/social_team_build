@@ -59,9 +59,9 @@ class CreateApplicant(View):
         position_id = request.POST.get('position')
         position = Position.objects.get(id=int(position_id))
         Applicant(applicant=self.request.user,
-                  hired=False, position=position).save()
+                  hired=None, position=position).save()
         messages.add_message(request, messages.SUCCESS,
-                             'your application has been recieved')
+                             'your application has been received')
         return redirect('projects:detail', pk=position.project_id)
 
 
@@ -95,7 +95,7 @@ class ApplicantApprove(SingleObjectMixin, SingleObjectTemplateResponseMixin,
         applicant = Applicant.objects.get(id=kwargs['pk'])
         applicant.hired = True
         applicant.save()
-        messages.success(request, 'Your application has been saved')
+        messages.success(request, 'Applicant has been notified of hire')
         return redirect('projects:applicants')
 
 
@@ -106,6 +106,6 @@ class ApplicantReject(SingleObjectMixin, SingleObjectTemplateResponseMixin,
         applicant = Applicant.objects.get(id=kwargs['pk'])
         applicant.hired = False
         applicant.save()
-        messages.success(request, 'Your application has been saved')
+        messages.success(request, 'We sent a nice consolation prize')
         return redirect('projects:applicants')
 
