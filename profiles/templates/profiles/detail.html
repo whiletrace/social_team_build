@@ -42,7 +42,7 @@
                 </thead>
                 <tbody>
                 {% for position in positions_applied %}
-                    <tr class="clickable-row" data-href="project.html">
+                    <tr class="clickable-row" data-href="{% url 'projects:detail' pk=position.position.project.id %}">
                         <td>
                             <h3>{{ position.position.project.title }}</h3>
                         </td>
