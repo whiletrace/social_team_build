@@ -25,6 +25,10 @@ class Position(models.Model):
     filled = models.BooleanField(default=False)
 
 
+    class Meta:
+        ordering = ('title',)
+
+
 class Applicant(models.Model):
     applicant = models.ForeignKey(settings.AUTH_USER_MODEL,
                                   on_delete=models.CASCADE)

@@ -37,7 +37,9 @@ urlpatterns = [
                   path('projects/',
                        include('projects.urls', namespace='projects')),
 
-                  path('search/', views.project_search, name='search')
+                  path('search/', views.project_search, name='search'),
+
+                  path('filter/', views.position_filter, name='filter')
 
 
                   ] + static(settings.MEDIA_URL,
