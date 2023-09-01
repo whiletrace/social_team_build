@@ -58,7 +58,7 @@ MIDDLEWARE = [
     ]
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 
-ROOT_URLCONF = "social_team_build.urls"
+ROOT_URLCONF = "social.urls"
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
         },
                 ]
 
-WSGI_APPLICATION = 'social_team_build.wsgi.application'
+WSGI_APPLICATION = 'social.wsgi.application'
 
 
 # Database
@@ -123,15 +123,15 @@ AUTH_PASSWORD_VALIDATORS = [
         },
     {
         'NAME':
-            'social_team_build.custom_validators.SpecialCharacterValidator'
+            'social.custom_validators.SpecialCharacterValidator'
         },
     {
         'NAME':
-            'social_team_build.custom_validators.UpperLowerCaseValidator'
+            'social.custom_validators.UpperLowerCaseValidator'
         },
     {
         'NAME':
-            'social_team_build.custom_validators.ContainsNumberValidator'
+            'social.custom_validators.ContainsNumberValidator'
         },
     ]
 

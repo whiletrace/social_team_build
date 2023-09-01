@@ -1,0 +1,58 @@
+[
+{
+    "model": "accounts.newuser",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$oyOSFmOa8HaLsUYcr38Sqi$f5j5QlPWO62B9HNm/g0ttKkhJga+ywvD5s7jCniZEoc=",
+        "last_login": "2023-09-01T02:56:13.715Z",
+        "email": "traceh38@gmail.com",
+        "first_name": "test",
+        "last_name": "superuser",
+        "date_of_birth": "1975-08-27",
+        "is_active": true,
+        "is_admin": true
+    }
+},
+{
+    "model": "accounts.newuser",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$zHCUejS5AYen0PXmc6gE8S$jQGfLnoDbNBYgwrkcxuArPknSLM957IU4iLnab2z7pg=",
+        "last_login": null,
+        "email": "testuser1@testuser.com",
+        "first_name": "test",
+        "last_name": "user1",
+        "date_of_birth": "1975-08-27",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "accounts.newuser",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$vKxroeKn1gHwx1LKzYzdTm$SyHXaFFtFlk/NDXLxqLQ95DjYgcWMRwju/sJoIW/27A=",
+        "last_login": null,
+        "email": "testuser2@testuser.com",
+        "first_name": "test",
+        "last_name": "user2",
+        "date_of_birth": "1975-08-27",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "accounts.newuser",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$oZdCVTkL8Z1Vi7eXHuuiIm$PqsKwrm4B9vrwnx/zrgs6rUopwvKNwmQzkQtQ57r7HY=",
+        "last_login": null,
+        "email": "testuser3@testuser.com",
+        "first_name": "test",
+        "last_name": "user3",
+        "date_of_birth": "1975-08-27",
+        "is_active": true,
+        "is_admin": false
+    }
+}
+]
