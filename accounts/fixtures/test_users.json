@@ -1,7 +1,7 @@
 [
 {
     "model": "accounts.newuser",
-    "pk": 4,
+    "pk": 1,
     "fields": {
         "password": "pbkdf2_sha256$260000$oyOSFmOa8HaLsUYcr38Sqi$f5j5QlPWO62B9HNm/g0ttKkhJga+ywvD5s7jCniZEoc=",
         "last_login": "2023-09-01T02:56:13.715Z",
@@ -15,7 +15,7 @@
 },
 {
     "model": "accounts.newuser",
-    "pk": 5,
+    "pk": 2,
     "fields": {
         "password": "pbkdf2_sha256$260000$zHCUejS5AYen0PXmc6gE8S$jQGfLnoDbNBYgwrkcxuArPknSLM957IU4iLnab2z7pg=",
         "last_login": null,
@@ -29,7 +29,7 @@
 },
 {
     "model": "accounts.newuser",
-    "pk": 6,
+    "pk":3,
     "fields": {
         "password": "pbkdf2_sha256$260000$vKxroeKn1gHwx1LKzYzdTm$SyHXaFFtFlk/NDXLxqLQ95DjYgcWMRwju/sJoIW/27A=",
         "last_login": null,
@@ -43,7 +43,7 @@
 },
 {
     "model": "accounts.newuser",
-    "pk": 7,
+    "pk": 4,
     "fields": {
         "password": "pbkdf2_sha256$260000$oZdCVTkL8Z1Vi7eXHuuiIm$PqsKwrm4B9vrwnx/zrgs6rUopwvKNwmQzkQtQ57r7HY=",
         "last_login": null,
