@@ -23,8 +23,13 @@
                             <p>{{ position.description }}</p>
                             <form action="{% url 'projects:apply' position=position.id %}" method="post">
                                 <input type="hidden" name="position" value='{{ position.id }}'/>
-                                {% csrf_token %}
-                                <button class="button-primary">apply</button>
+                                {% if user.is_authenticated %}
+                                    {% csrf_token %}
+                                    <button class="button-primary">apply</button>
+                                {% endif %}
+                                {% if not user.is_authenticated %}
+                                    <h5>please login to apply for this position</h5>
+                                {% endif %}
                             </form>
                         </li>
 
