@@ -10,10 +10,7 @@ class ProfileForm(ModelForm):
     skills = forms.ModelMultipleChoiceField(queryset=Skills.objects.all(),
                                             required=False,
                                             to_field_name='skill',
-                                            help_text=
-                                            'to select multiple hold'
-                                            ' command for mac or control '
-                                            'for windows '
+                                            help_text='To select multiple items, hold Command (Mac) or Control (Windows)'
                                             )
 
 

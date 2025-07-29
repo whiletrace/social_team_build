@@ -27,7 +27,6 @@ def project_search(request):
 
     return render(request, 'home.html', {'project_list':project_list})
 
-
 def position_filter(request):
     """
     view takes takes care of mineral group query logic and outputs to
@@ -35,7 +34,7 @@ def position_filter(request):
 
     takes request object as argument queries the database for
     var group
-    passes the value of parameter too index as context
+    passes the value of parameter too index as context1
     :rtype: django.http.response.HttpResponse
     """
     position_list = Position.objects.order_by().values_list('title',

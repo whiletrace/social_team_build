@@ -1,6 +1,7 @@
 import pytest
+from django.contrib.messages import get_messages
 
-from projects.models import UserProject
+from projects.models import UserProject, Position, Applicant
 
 
 # test models
@@ -32,3 +33,42 @@ def test_post(client, make_test_user):
         })
 
     assert UserProject.objects.last().title == 'bigguy'
+
+
+@pytest.mark.django_db
+def test_project_owner_cannot_apply_to_own_position(client, make_test_user):
+    """Test that project owners cannot apply to positions in their own projects"""
+    user = make_test_user
+    client.force_login(user)
+    
+    # Create a project
+    project = UserProject.objects.create(
+        created_by=user,
+        title='Test Project',
+        description='Test description',
+        timeline='1 month',
+        requirements='Python skills'
+    )
+    
+    # Create a position for the project
+    position = Position.objects.create(
+        project=project,
+        title='Developer',
+        description='Python developer needed'
+    )
+    
+    # Attempt to apply to own position
+    response = client.post(f'/projects/create_applicant/{position.id}/', {
+        'position': position.id,
+        'hired': False
+    })
+    
+    # Should redirect back to project detail
+    assert response.status_code == 302
+    
+    # Should not create an application
+    assert Applicant.objects.filter(applicant=user, position=position).count() == 0
+    
+    # Should show error message
+    messages = list(get_messages(response.wsgi_request))
+    assert any('cannot apply to positions in your own project' in str(message) for message in messages)

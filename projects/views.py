@@ -58,6 +58,13 @@ class CreateApplicant(View):
     def post(self, request, *args, **kwargs):
         position_id = request.POST.get('position')
         position = Position.objects.get(id=int(position_id))
+        
+        # Prevent project owners from applying to their own positions
+        if position.project.created_by == request.user:
+            messages.add_message(request, messages.ERROR,
+                                 'You cannot apply to positions in your own project')
+            return redirect('projects:detail', pk=position.project_id)
+        
         Applicant(applicant=self.request.user,
                   hired=None, position=position).save()
         messages.add_message(request, messages.SUCCESS,
