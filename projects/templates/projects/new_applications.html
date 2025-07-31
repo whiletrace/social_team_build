@@ -43,19 +43,21 @@
                     <th class="circle--cell--right">Applicant Position</th>
                 </tr>
                 </thead>
+                {% for applicant in new %}
                 <tbody>
 
-                <tr class="clickable-row" data-href="{% url 'profiles:detail' pk=new.applicant.id %}">
+                <tr class="clickable-row" data-href="{% url 'profiles:detail' pk=applicant.applicant.id%}">
                     <td>
-                        <h3>{{ new.applicant.userprofile.username }}</h3>
-                        <p>{{ new.position.project.title }}</p>
+                        <h3>{{applicant.applicant.userprofile.username  }}</h3>
+                        <p> {{ applicant.position.project.title }}</p>
                     </td>
                     <td class="circle--cell--right">
-                        <span class="secondary-label">{{ new.position.title }}</span>
+                        <span class="secondary-label">{{ applicant.position.title}}</span>
                     </td>
                 </tr>
-
+                {% endfor %}
                 </tbody>
+
             </table>
 
         </div>
