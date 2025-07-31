@@ -84,7 +84,7 @@ class ApplicantList(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['new'] = self.get_queryset().last()
+        context['new'] = self.get_queryset().order_by('-id').first()
         context['accepted'] = self.get_queryset().filter(hired=True)
         context['rejected'] = self.get_queryset().filter(hired=False)
         return context
