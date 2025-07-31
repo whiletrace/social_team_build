@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 
 # So this is going to be a model for profile
@@ -39,5 +42,11 @@ class UserProfile(models.Model):
     def get_absolute_url(self):
         return reverse('profiles:detail', kwargs={'pk': self.pk})
 
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def my_handlers(sender, created, instance,**kwargs):
+    if created:
+        UserProfile.objects.create(created_by=instance)
 
 

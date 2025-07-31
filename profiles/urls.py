@@ -8,8 +8,7 @@ app_name = 'profiles'
 
 urlpatterns = [
 
-    # create profile
-    path('create_profile/', views.create_profile, name='create_profile', ),
+
 
     # display profile
     path('detail/<int:pk>/',
