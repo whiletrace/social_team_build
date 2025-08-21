@@ -1,0 +1,167 @@
+[
+{
+    "model": "projects.userproject",
+    "pk": 1,
+    "fields": {
+        "created_by": 2,
+        "title": "E-commerce Platform",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. We need to build a modern e-commerce platform with React frontend and Django backend. The platform should include user authentication, product catalog, shopping cart, and payment processing. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "timeline": "3 months",
+        "requirements": "Experience with React, Django, and payment APIs"
+    }
+},
+{
+    "model": "projects.userproject",
+    "pk": 2,
+    "fields": {
+        "created_by": 3,
+        "title": "Mobile Fitness App",
+        "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. We're creating a comprehensive fitness tracking mobile application. The app will feature workout planning, progress tracking, social features, and integration with wearable devices. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Looking for passionate developers who understand health and fitness.",
+        "timeline": "4 months",
+        "requirements": "Mobile development experience, UI/UX skills"
+    }
+},
+{
+    "model": "projects.userproject",
+    "pk": 3,
+    "fields": {
+        "created_by": 4,
+        "title": "AI Data Analysis Tool",
+        "description": "Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. This project involves developing an AI-powered data analysis platform that can process large datasets and provide intelligent insights. The tool should support multiple data formats, machine learning algorithms, and generate comprehensive reports. Phasellus ultrices nulla quis nibh. Perfect for data science enthusiasts.",
+        "timeline": "6 months",
+        "requirements": "Python, Machine Learning, Data Science experience"
+    }
+},
+{
+    "model": "projects.userproject",
+    "pk": 4,
+    "fields": {
+        "created_by": 1,
+        "title": "Virtual Reality Education Platform",
+        "description": "Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. An innovative VR platform for immersive educational experiences. The platform will allow educators to create virtual classrooms and students to attend classes in a 3D environment. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Revolutionary approach to remote learning.",
+        "timeline": "8 months",
+        "requirements": "VR development, Unity, 3D modeling skills"
+    }
+},
+{
+    "model": "projects.userproject",
+    "pk": 5,
+    "fields": {
+        "created_by": 2,
+        "title": "Cybersecurity Dashboard",
+        "description": "Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Building a comprehensive cybersecurity monitoring dashboard for enterprise environments. The system will provide real-time threat detection, vulnerability assessment, and incident response capabilities. Nulla facilisi. Ut fringilla. Essential for modern security operations.",
+        "timeline": "5 months",
+        "requirements": "Cybersecurity knowledge, backend development"
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 1,
+    "fields": {
+        "project": 1,
+        "title": "Frontend Developer",
+        "description": "Responsible for building the user interface using React. Must have experience with modern JavaScript, CSS frameworks, and responsive design.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 2,
+    "fields": {
+        "project": 1,
+        "title": "Backend Developer",
+        "description": "Django backend development including API design, database optimization, and security implementation.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 3,
+    "fields": {
+        "project": 1,
+        "title": "UI/UX Designer",
+        "description": "Create intuitive and engaging user interfaces. Experience with design tools and user research required.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 4,
+    "fields": {
+        "project": 2,
+        "title": "Mobile Developer",
+        "description": "iOS and Android app development using React Native or native technologies. Experience with health APIs preferred.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 5,
+    "fields": {
+        "project": 2,
+        "title": "UX Designer",
+        "description": "Design user-friendly fitness app interfaces. Understanding of fitness industry and user behavior analysis.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 6,
+    "fields": {
+        "project": 3,
+        "title": "Data Scientist",
+        "description": "Implement machine learning algorithms and statistical analysis. PhD in related field preferred.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 7,
+    "fields": {
+        "project": 3,
+        "title": "Python Developer",
+        "description": "Backend development for data processing pipelines. Experience with pandas, numpy, and scikit-learn.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 8,
+    "fields": {
+        "project": 4,
+        "title": "VR Developer",
+        "description": "Unity 3D development for virtual reality experiences. Oculus and HTC Vive experience required.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 9,
+    "fields": {
+        "project": 4,
+        "title": "3D Artist",
+        "description": "Create 3D models and environments for VR platform. Proficiency in Blender or Maya required.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 10,
+    "fields": {
+        "project": 5,
+        "title": "Security Analyst",
+        "description": "Cybersecurity expertise in threat detection and incident response. Security certifications preferred.",
+        "filled": false
+    }
+},
+{
+    "model": "projects.position",
+    "pk": 11,
+    "fields": {
+        "project": 5,
+        "title": "DevOps Engineer",
+        "description": "Infrastructure management and security automation. Experience with cloud platforms and monitoring tools.",
+        "filled": false
+    }
+}
+]
