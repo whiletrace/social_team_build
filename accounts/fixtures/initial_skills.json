@@ -40,5 +40,89 @@
     "fields": {
       "skill": "Django"
     }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 7,
+    "fields": {
+      "skill": "React"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 8,
+    "fields": {
+      "skill": "Node.js"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 9,
+    "fields": {
+      "skill": "Machine Learning"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 10,
+    "fields": {
+      "skill": "DevOps"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 11,
+    "fields": {
+      "skill": "Mobile Development"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 12,
+    "fields": {
+      "skill": "UI/UX Design"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 13,
+    "fields": {
+      "skill": "Data Science"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 14,
+    "fields": {
+      "skill": "Cybersecurity"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 15,
+    "fields": {
+      "skill": "Cloud Computing"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 16,
+    "fields": {
+      "skill": "Project Management"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 17,
+    "fields": {
+      "skill": "Database Design"
+    }
+  },
+  {
+    "model": "profiles.skills",
+    "pk": 18,
+    "fields": {
+      "skill": "API Development"
+    }
   }
 ]

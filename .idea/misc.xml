@@ -9,8 +9,12 @@
   <component name="PWA">
     <option name="wasEnabledAtLeastOnce" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10.12 WSL (Ubuntu): (/root/.virtualenvs/social_team_build/bin/python)" project-jdk-type="Python SDK" />
   <component name="PyPackaging">
     <option name="earlyReleasesAsUpgrades" value="true" />
   </component>
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10.12 WSL (Ubuntu): (/home/whiletrace/dev_projects/python_projects/social_team_build/venv/bin/python)" project-jdk-type="Python SDK" />
+>>>>>>> development
 </project>

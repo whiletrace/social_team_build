@@ -56,6 +56,13 @@ class CreateApplicant(View):
     model = UserProject
 
     def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.add_message(request, messages.ERROR,
+                                 'Must be logged in to apply to positions.')
+            position_id = request.POST.get('position')
+            position = Position.objects.get(id=int(position_id))
+            return redirect('projects:detail', pk=position.project_id)
+        
         position_id = request.POST.get('position')
         position = Position.objects.get(id=int(position_id))
         
