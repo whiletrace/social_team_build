@@ -171,7 +171,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # deploy settings
-SECURE_SSL_REDIRECT= True
+SECURE_SSL_REDIRECT = False  # Railway handles SSL termination
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
