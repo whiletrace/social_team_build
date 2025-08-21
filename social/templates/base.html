@@ -64,7 +64,12 @@
                     <nav>
                         <ul class="circle--inline">
                             <li><a href="{% url 'profiles:detail' pk=user.id %}">Profile</a></li>
-                            <li><a href="{% url 'accounts:logout' %}">Sign out</a></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit">logout</button>
+                                </form>>
+                            </li>
                         </ul>
                     </nav>
                 {% else %}
