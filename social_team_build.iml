@@ -15,8 +15,9 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.10.12 WSL (Ubuntu): (/root/.virtualenvs/social_team_build/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10.12 WSL (Ubuntu): (/home/whiletrace/dev_projects/python_projects/social_team_build/venv/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery-2.2.0" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
