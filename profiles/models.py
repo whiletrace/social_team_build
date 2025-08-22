@@ -10,7 +10,7 @@ from django.dispatch import receiver
 # non auth related user information
 
 class Skills(models.Model):
-    skill = models.CharField(blank=True, default='', max_length=25)
+    skill = models.CharField(blank=True, default='', max_length=50)
 
     def __str__(self):
         return self.skill
