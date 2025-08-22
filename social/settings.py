@@ -87,6 +87,14 @@ WSGI_APPLICATION = 'social.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
+# PostgreSQL environment defaults for production
+os.environ.setdefault("PGDATABASE", "liftoff_dev")
+os.environ.setdefault("PGUSER", "username")
+os.environ.setdefault("PGPASSWORD", "")
+os.environ.setdefault("PGHOST", "localhost")
+os.environ.setdefault("PGPORT", "5432")
+
 if os.environ.get('DATABASE_URL'):
     DATABASES = {
         'default':
