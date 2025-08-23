@@ -182,7 +182,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # deploy settings
 SECURE_SSL_REDIRECT = False  # Railway handles SSL termination
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 #HTTP STRIct transport security
 SECURE_HSTS_SECONDS = 31536000
