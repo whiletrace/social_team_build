@@ -54,5 +54,114 @@
         "is_active": true,
         "is_admin": false
     }
+},
+{
+    "model": "profiles.skills",
+    "pk": 1,
+    "fields": {
+        "skill": "OOP"
+    }
+},
+{
+    "model": "profiles.skills",
+    "pk": 2,
+    "fields": {
+        "skill": "design"
+    }
+},
+{
+    "model": "profiles.skills",
+    "pk": 3,
+    "fields": {
+        "skill": "javascript"
+    }
+},
+{
+    "model": "profiles.skills",
+    "pk": 4,
+    "fields": {
+        "skill": "Python"
+    }
+},
+{
+    "model": "profiles.skills",
+    "pk": 5,
+    "fields": {
+        "skill": "Virtual Reality Development"
+    }
+},
+{
+    "model": "profiles.skills",
+    "pk": 6,
+    "fields": {
+        "skill": "Django"
+    }
+},
+{
+    "model": "profiles.userprofile",
+    "pk": 1,
+    "fields": {
+        "created_by": 2,
+        "username": "testuser1",
+        "bio": "I'm baby sustainable gochujang mlkshk, iPhone mixtape everyday carry meh vibecession enamel pin praxis beard. Pour-over fanny pack whatever 90's single-origin coffee authentic viral. Tousled cronut marxism, helvetica taxidermy subway tile kombucha iceland fam ugh. Solarpunk jawn salvia quinoa semiotics portland. Listicle YOLO master cleanse vape food truck. Hell of wolf ethical man braid sustainable messenger bag.",
+        "avatar": "https://via.placeholder.com/300x300/4A90E2/FFFFFF?text=Avatar",
+        "skills": [
+            1,
+            3,
+            4,
+            6
+        ]
+    }
+},
+{
+    "model": "profiles.userprofile",
+    "pk": 2,
+    "fields": {
+        "created_by": 3,
+        "username": "testuser2",
+        "bio": "Blog tote bag 3 wolf moon ut +1, neutral milk hotel lo-fi consectetur irony hoodie. Eiusmod cloud bread Brooklyn nisi prism reprehenderit direct trade wayfarers you probably haven't heard of them viral. Mollit kale chips offal, vexillologist adipisicing sus intelligentsia live-edge lo-fi jean shorts squid. Hoodie woke listicle sus pariatur ex tumblr laborum synth gentrify craft beer truffaut. Vice selfies pop-up blackbird spyplane portland jean shorts lyft beard shoreditch banjo. Succulents gatekeep sartorial, hashtag authentic yuccie blog humblebrag selvage mollit locavore cold-pressed dreamcatcher. Vaporware enim ut thundercats disrupt cloud bread jianbing elit ullamco selvage tattooed ut occaecat ex.",
+        "avatar": "https://via.placeholder.com/300x300/4A90E2/FFFFFF?text=Avatar",
+        "skills": [
+            2,
+            3,
+            5
+        ]
+    }
+},
+{
+    "model": "profiles.userprofile",
+    "pk": 3,
+    "fields": {
+        "created_by": 4,
+        "username": "testuser3",
+        "bio": "Blog tote bag 3 wolf moon ut +1, neutral milk hotel lo-fi consectetur irony hoodie. Eiusmod cloud bread Brooklyn nisi prism reprehenderit direct trade wayfarers you probably haven't heard of them viral. Mollit kale chips offal, vexillologist adipisicing sus intelligentsia live-edge lo-fi jean shorts squid. Hoodie woke listicle sus pariatur ex tumblr laborum synth gentrify craft beer truffaut. Vice selfies pop-up blackbird spyplane portland jean shorts lyft beard shoreditch banjo. Succulents gatekeep sartorial, hashtag authentic yuccie blog humblebrag selvage mollit locavore cold-pressed dreamcatcher. Vaporware enim ut thundercats disrupt cloud bread jianbing elit ullamco selvage tattooed ut occaecat ex.",
+        "avatar": "https://via.placeholder.com/300x300/4A90E2/FFFFFF?text=Avatar",
+        "skills": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ]
+    }
+},
+{
+    "model": "profiles.userprofile",
+    "pk": 4,
+    "fields": {
+        "created_by": 1,
+        "username": "adminuser",
+        "bio": "Blog tote bag 3 wolf moon ut +1, neutral milk hotel lo-fi consectetur irony hoodie. Eiusmod cloud bread Brooklyn nisi prism reprehenderit direct trade wayfarers you probably haven't heard of them viral. Mollit kale chips offal, vexillologist adipisicing sus intelligentsia live-edge lo-fi jean shorts squid. Hoodie woke listicle sus pariatur ex tumblr laborum synth gentrify craft beer truffaut. Vice selfies pop-up blackbird spyplane portland jean shorts lyft beard shoreditch banjo. Succulents gatekeep sartorial, hashtag authentic yuccie blog humblebrag selvage mollit locavore cold-pressed dreamcatcher. Vaporware enim ut thundercats disrupt cloud bread jianbing elit ullamco selvage tattooed ut occaecat ex.",
+        "avatar": "https://via.placeholder.com/300x300/4A90E2/FFFFFF?text=Avatar",
+        "skills": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ]
+    }
 }
 ]

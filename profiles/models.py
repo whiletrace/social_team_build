@@ -29,7 +29,7 @@ class UserProfile(models.Model):
     """
     created_by = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        default="", unique=True,
+        default="createdby", unique=True,
         on_delete=models.CASCADE
         )
     username = models.CharField(blank=True, default='', max_length=50)

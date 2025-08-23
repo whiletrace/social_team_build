@@ -126,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
             'max_similarity':0.5
             }
         },
+
     {
         'NAME':
             'django.contrib.auth.password_validation.MinimumLengthValidator',
