@@ -45,8 +45,8 @@ class UserProfile(models.Model):
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def my_handlers(sender, created, instance,**kwargs):
-    if created:
+def my_handlers(sender, created, instance, **kwargs):
+    if created and not kwargs.get('raw', False):
         UserProfile.objects.get_or_create(created_by=instance)
 
 
