@@ -184,6 +184,11 @@ SECURE_SSL_REDIRECT = False  # Railway handles SSL termination
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = False
 
+# CSRF trusted origins for Railway deployment
+CSRF_TRUSTED_ORIGINS = [
+    'https://socialteambuild-production.up.railway.app',
+]
+
 #HTTP STRIct transport security
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_PRELOAD = True
