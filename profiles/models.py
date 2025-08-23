@@ -29,7 +29,7 @@ class UserProfile(models.Model):
     """
     created_by = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        default="createdby", unique=True,
+        default="", unique=True,
         on_delete=models.CASCADE
         )
     username = models.CharField(blank=True, default='', max_length=50)
@@ -45,8 +45,8 @@ class UserProfile(models.Model):
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def my_handlers(sender, created, instance, **kwargs):
-    if created and not kwargs.get('raw', False):
+def my_handlers(sender, created, instance,**kwargs):
+    if created:
         UserProfile.objects.get_or_create(created_by=instance)
 
 
