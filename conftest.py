@@ -11,11 +11,11 @@ pytest_plugins = ['testing.fixtures.profile_fixtures',
 def make_test_superuser():
     def _make_test_superuser():
         super_user = User.objects.create_superuser(
-            email='test@Qtest.com',
+            email='superuser@test.com',
             first_name='super',
             last_name='user',
             date_of_birth='1975-08-22',
-            password='@Password',
+            password='testpass123',
             )
         return super_user
 
@@ -26,11 +26,11 @@ def make_test_superuser():
 def make_test_user():
     def _make_test_user():
         user = User.objects.create_user(
-            email='test@Qtest.com',
+            email='testuser@test.com',
             first_name='test',
             last_name='user',
             date_of_birth='1975-08-22',
-            password='@Password',
+            password='testpass123',
             )
         return user
 
