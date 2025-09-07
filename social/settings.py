@@ -186,7 +186,7 @@ CSRF_COOKIE_SECURE = False
 
 # CSRF trusted origins for Railway deployment
 CSRF_TRUSTED_ORIGINS = [
-    'https://socialteambuild-production.up.railway.app',
+    'https://socialteambuild.up.railway.app',
 ]
 
 #HTTP STRIct transport security
